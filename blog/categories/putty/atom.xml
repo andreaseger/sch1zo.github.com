@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: putty | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/putty/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: establishing a SSH tunnel and use it as SOCKS proxy]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/"/>
+    <updated>2011-08-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy</id>
+    <content type="html"><![CDATA[<p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+<!-- more -->
+
+
+<h2>Putty</h2>
+
+<p>I'd like to think that you already have a session which connects to your
+server via ssh. Load this session and go in the menu to the item
+<strong>Connection</strong> -> <strong>SSH</strong> -> <strong>Tunnels</strong>.</p>
+
+<p>Enter the portnumber of your choice into the field <strong>Source Port</strong> for example
+1234.</p>
+
+<p>Than select <em>Dynamic</em> and <em>Auto</em> and click <strong>Add</strong>. You will now see <strong>D1234</strong>
+in the list above.</p>
+
+<p>You can now go back the the sessions screen, save your changes and open the
+connection.</p>
+
+<h2>unix</h2>
+
+<p>for unix it is quite simple</p>
+
+<pre><code>ssh -ND 1234 user@server.com
+</code></pre>
+
+<p>This will open a SOCKS proxy on port 1234 to the server. <strong>-N</strong> Tells prevents
+the console from executing any remote command. This way it will just open the
+tunnel and than sits there and waits for you to close it (with CTRL+C) later.
+With an additional <strong>-f</strong> it is also possible to completely background the
+process, but than its not as easy for you to close the tunnel later.</p>
+]]></content>
+  </entry>
+  
+</feed>

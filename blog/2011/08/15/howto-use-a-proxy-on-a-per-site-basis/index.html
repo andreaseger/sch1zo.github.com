@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HOWTO: use a proxy on a per-site basis - meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites. For example you only want to use the proxy if you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HOWTO: Use a Proxy on a Per-site Basis</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites.</p>
+
+<p>For example you only want to use the proxy if you got to &#8220;hulu.com&#8221; and
+&#8220;pandora.com&#8221;.</p>
+
+<!-- more -->
+
+
+<p><em>I assume you at the moment you have setup the proxy as described in my last
+post</em></p>
+
+<p>The in my opinion most obvious solution is to use a <a href="http://en.wikipedia.org/wiki/Proxy_auto-config">Proxy auto-
+config</a>-file. Unfortunately
+this will not work in all browsers.</p>
+
+<p>First lets take a look at the <strong>proxy.pac</strong> file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function FindProxyForURL(url, host)
+</span><span class='line'>{
+</span><span class='line'>  // Use Proxy?
+</span><span class='line'>  if (dnsDomainIs(host, ".hulu.com") || dnsDomainIs(host, ".pandora.com")){
+</span><span class='line'>    return "SOCKS 127.0.0.1:1234";
+</span><span class='line'>  } else {
+</span><span class='line'>    return "DIRECT";
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It returns the SOCKS address if its hulu or pandora otherwise it goes directly
+to the site. Save that file somewhere local or on a webserver.</p>
+
+<p>Setting up the Browsers:</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>&#8220;Automatic proxy configuration URL:&#8221;</strong></li>
+<li>enter a url or filepath to your proxy.pac</li>
+</ol>
+
+
+<h2>Opera</h2>
+
+<p>Opera also is able to use pac files, but due to it lack of SOCKS proxy support
+for a long time(Only got it with version 11) it does not support SOCKS proxies
+within a pac file. But there is a nice workaround.</p>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Proxy Servers</strong></li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to SOCKS, keep the other fields empty (this is exactly how to set it up permanently)</li>
+<li>click <strong>Exception List</strong></li>
+<li>choose <strong>Only use proxy for servers on the list</strong></li>
+<li>finally add pandora.com and hulu.com to that list.</li>
+</ol>
+
+
+<p>So instead of using the auto-config file you can use a whitelist. It can also
+be used the other way around as blacklist.</p>
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<p>There is an option within the system LAN Settings to use a automatic
+configuration script, but all three browsers completely ignore that script.
+They should be able to configure a SOCKS Proxy via a pac file but it didn&#8217;t
+work for me. I also didn&#8217;t find another way to do a per-site proxy
+configuration.</p>
+
+<p><em>Update:</em> I had a look at the proxy settings in Chrome with Ubuntu running
+gnome-shell. There is also a option to use a pac file but again the above
+settings will just be ignored.</p>
+
+<p><em>Update 2:</em> it seems this does not work anymore with hulu</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andreas Eger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ie9/'>IE9</a>, <a class='category' href='/blog/categories/chrome/'>chrome</a>, <a class='category' href='/blog/categories/firefox/'>firefox</a>, <a class='category' href='/blog/categories/opera/'>opera</a>, <a class='category' href='/blog/categories/proxy/'>proxy</a>, <a class='category' href='/blog/categories/safari/'>safari</a>, <a class='category' href='/blog/categories/socks/'>socks</a>, <a class='category' href='/blog/categories/tumblr/'>tumblr</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/" data-via="sch1zo" data-counturl="http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/" title="Previous Post: HOWTO: configuring a local SOCKS Proxy in your browser">&laquo; HOWTO: configuring a local SOCKS Proxy in your browser</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/" title="next Post: HOWTO: establishing a SSH tunnel and use it as SOCKS proxy">HOWTO: establishing a SSH tunnel and use it as SOCKS proxy &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">compiling ruby 1.8.7 with gcc 4.6.*</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">how to compile a fast imagemagick</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: establishing a SSH tunnel and use it as SOCKS proxy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">HOWTO: use a proxy on a per-site basis</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

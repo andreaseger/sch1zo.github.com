@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rake | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/rake/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[RSpec 2 standalone rake task]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task/"/>
+    <updated>2011-05-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task</id>
+    <content type="html"><![CDATA[<p>just to save me some time the next time I need this.</p>
+
+<p>this task will simply run all <strong>_spec.rb</strong> files within your <strong>spec</strong> folder</p>
+
+<p><a href="http://duckpunching.com/rspec-2-0-rake-tasks">Source</a></p>
+]]></content>
+  </entry>
+  
+</feed>

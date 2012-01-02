@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>using my ec2 instance to get a US IP - meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="Today I was surfing around and once again I got that ugly GEMA message on a
+youtube music video which prevented me from watching it. In the last &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Using My Ec2 Instance to Get a US IP</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-12T00:00:00+02:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Today I was surfing around and once again I got that ugly GEMA message on a
+youtube music video which prevented me from watching it. In the last months
+more and more videos got blocked this way and makes having a german IP a pain.</p>
+
+<p>But than I remembered that I can set up a Micro Instance in one of the US
+datacentrers and route my web traffic through it.</p>
+
+<!-- more -->
+
+
+<p>So what are my options to do this?</p>
+
+<ul>
+<li>setting up a proxy server on that instance</li>
+<li>establish a ssh tunnnel and use that as local proxy</li>
+<li>set up a VPN server on the instance and use that to reroute my traffic</li>
+</ul>
+
+
+<p>Because I don&#8217;t like having to set a proxy in each and every browser and app I
+have and than always having to keep my tunnel open I decided to look into the
+VPN solution. After all I can fall back to the tunnel at any time - for
+example if I need to connect to another VPN and still want to use a US IP or
+if I want to be connected to one of my other servers without having the signal
+bounce to the US and back.</p>
+
+<p>After deleting my existing instance(which was at the european data center) I
+looked at the available Community AMIs. One of them was called <strong>OpenVPN
+Access Server</strong> and after looking at the related site I thought this is
+exactly what I wanted and is free for 2 concurrent users. Theres also a
+<a href="http://openvpn.net/index.php/access-server/docs/admin-guides/499%0A-openvpn-access-server-ami.html">guide</a> on their site which describes how to make the
+initial setup. And even better it perfectly fits in the Free Tier Plan.</p>
+
+<p>Unfortunately I could nowhere find what the user is with which I can connect
+via ssh to the instance. After some more searching and trying I figured its
+the user <strong>ubuntu</strong> - nice of them to mention that nowhere in the guide.</p>
+
+<p>But even without even having to connect a single time via SSH to the instance
+it had started a nice webUI with full Admin interface and everything you need
+to connect to the VPN. It even offers pre-configured OpenVPN Clients for
+Windows and Mac and a guide for Unix.</p>
+
+<p>So now all I have to do is tell the OpenVPN Client to connect to my instance
+and I&#8217;m good to go. Now I just have to keep a look at my monthly traffic -
+there are <em>only</em> 15GB in and 15GB out in the Free Tier Plan. Could become a
+problem considering the fact I now have access to hulu/pandora and others.</p>
+
+<p>This usage doesn&#8217;t has anything to do with my initial plan to explore the
+cloud but an EC2 instance is basically just a virtual server with some
+additional services strapped on. Still I will look into the other services of
+the Free Tier Plan. I&#8217;m especially interested in the SimpleDB service,
+unfortunately only 25 <em>machine hours</em> are free per month - whatever they mean
+with machine hour. There are more <em>more cloudy</em> things I have in mind and will
+test at some point.</p>
+
+<p>PS: I also found a really nice monthly activities page for your account, shows
+exactly what and how much of it you used and how much it costs.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andreas Eger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-12T00:00:00+02:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/amazon-web-services/'>Amazon Web Services</a>, <a class='category' href='/blog/categories/aws/'>aws</a>, <a class='category' href='/blog/categories/cloud/'>cloud</a>, <a class='category' href='/blog/categories/gema/'>gema</a>, <a class='category' href='/blog/categories/ip/'>ip</a>, <a class='category' href='/blog/categories/ssh/'>ssh</a>, <a class='category' href='/blog/categories/tumblr/'>tumblr</a>, <a class='category' href='/blog/categories/us/'>us</a>, <a class='category' href='/blog/categories/vpn/'>vpn</a>, <a class='category' href='/blog/categories/youtube/'>youtube</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sch1zo.github.com/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/" data-via="sch1zo" data-counturl="http://sch1zo.github.com/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/" title="Previous Post: Messing around with the Amazon Cloud Part 1">&laquo; Messing around with the Amazon Cloud Part 1</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/" title="next Post: HOWTO: configuring a local SOCKS Proxy in your browser">HOWTO: configuring a local SOCKS Proxy in your browser &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">compiling ruby 1.8.7 with gcc 4.6.*</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">how to compile a fast imagemagick</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: establishing a SSH tunnel and use it as SOCKS proxy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">HOWTO: use a proxy on a per-site basis</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

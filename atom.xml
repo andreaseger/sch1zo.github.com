@@ -1,16 +1,950 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[meh...]]></title>
   <link href="http://sch1zo.github.com/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-01-01T20:04:18+01:00</updated>
+  <updated>2012-01-02T07:09:16+01:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Andreas Eger]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress for the win]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/02/octopress-for-the-win/"/>
+    <updated>2012-01-02T05:02:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/02/octopress-for-the-win</id>
+    <content type="html"><![CDATA[<p>New Year, new Blog.</p>
+
+<p>I decided to kill my tumblr and start this octopress blog. At the moment I
+just imported most of the old posts and fixed tags/categories, but I still
+have to check all links and move some images.</p>
+
+<p>And just for the record here are a few of the snippets used to convert the
+posts.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># download and extract posts in jekyll format</span>
+</span><span class='line'>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
+</span><span class='line'>ruby -r <span class="s1">&#39;./tumblr&#39;</span> -e <span class="s1">&#39;Jekyll::Tumblr.process(&quot;http://sch1zo.tumblr.com&quot;,format=&quot;md&quot;)&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exchange tags for categories</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==4 and s/tags/categories/;close ARGV if eof&#39;</span> *
+</span><span class='line'>
+</span><span class='line'><span class="c"># add a tumbler tag/category to each post</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==5 and s/^/- tumblr\n/;close ARGV if eof&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
+after searching for this kind a task, and I didn&#8217;t want to convert them to Ruby
+or anything else.</p>
+
+<p>Unfortunatly I couldn&#8217;t find a way to write the date into the meta data of the
+file. Perhaps I&#8217;m just to tired&#8230;</p>
+
+<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
+by hand.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -pie <span class="s1">&#39;$.==4 and $_.sub!(/^/, &quot;date: #{&quot;2011-03-02-here should be the current filename&quot;.match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n&quot;)&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[compiling ruby 1.8.7 with gcc 4.6.*]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46/"/>
+    <updated>2011-09-09T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46</id>
+    <content type="html"><![CDATA[<p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can&#8217;t compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+<!-- more -->
+
+
+<p>After some googling I just grabbed the source from github and compiled it
+myself without relying on the default installer.</p>
+
+<p>You will get 2 errors but they basically the same. While building ruby at some
+point two files get generated <code>callback.func</code> and <code>cbtables.func</code>.
+Unfortunately later on exactly these two files are wrong…</p>
+
+<p>The - when you know what to do - easy solution is the following</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">cd </span>ext/dl
+</span><span class='line'>rm callback.func cbtables.func
+</span><span class='line'>touch callback.func cbtables.func
+</span><span class='line'>
+</span><span class='line'>ruby mkcallback.rb &gt;&gt; callback.func
+</span><span class='line'>ruby mkcbtables.rb &gt;&gt; cbtables.func
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After this go back to the root source folder and run <code>make</code> again. Make will
+start at the position of the last error, use the new files and finish
+building.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[how to compile a fast imagemagick]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick/"/>
+    <updated>2011-09-06T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick</id>
+    <content type="html"><![CDATA[<p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
+some image processing on a new webapp I&#8217;m building - creating thumbnails of
+uploaded images to be precise.</p>
+
+<p>The initial choice was to simply use the the package from the repository. But
+it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
+wallpaper which I used to test it( time sad a little above 7 seconds).</p>
+
+<!-- more -->
+
+
+<p>So the logical next step was to get the source and compile ImageMagick by
+hand. But I didn&#8217;t stopped there. After a quick search I found some tips to
+get it even faster:</p>
+
+<ul>
+<li>first lets mess around with the compiler optimization I found <a href="http://wikis.sun.com/display/AppPerfTuning/ImageMagick">here</a> but I did not change the CC CXX or CFLAGS instead I only modified CXXFLAGS</li>
+</ul>
+
+
+<p>export CXXFLAGS = &#8220;-g0 -fast -zlazyload&#8221;</p>
+
+<ul>
+<li>make it use only about half the memory configure with with-quantum-depth=8 instead of the default 16</li>
+</ul>
+
+
+<p>./configure &#8211;with-quantum-depth=8</p>
+
+<p>If this gives you a snappy imagemagick your fine, but on my ubuntu server a
+simple resize still took 7 seconds.</p>
+
+<p>So I did a little bit more searching and found out that a buggy OpenMP can
+cause this issue and disabling it while compiling fixes the slowness.</p>
+
+<p><strong>Finally here my complete configure line</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>./configure <span class="nv">CXX</span><span class="o">=</span><span class="s2">&quot;g++&quot;</span> <span class="nv">CXXFLAGS</span><span class="o">=</span><span class="s2">&quot;-g0 -fast -zlazyload&quot;</span> --with-quantum-depth<span class="o">=</span>8 --disable-openmp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<hr />
+
+<p>I know this post is a mess, but I dont care</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: establishing a SSH tunnel and use it as SOCKS proxy]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/"/>
+    <updated>2011-08-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy</id>
+    <content type="html"><![CDATA[<p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+<!-- more -->
+
+
+<h2>Putty</h2>
+
+<p>I&#8217;d like to think that you already have a session which connects to your
+server via ssh. Load this session and go in the menu to the item
+<strong>Connection</strong> -> <strong>SSH</strong> -> <strong>Tunnels</strong>.</p>
+
+<p>Enter the portnumber of your choice into the field <strong>Source Port</strong> for example
+1234.</p>
+
+<p>Than select <em>Dynamic</em> and <em>Auto</em> and click <strong>Add</strong>. You will now see <strong>D1234</strong>
+in the list above.</p>
+
+<p>You can now go back the the sessions screen, save your changes and open the
+connection.</p>
+
+<h2>unix</h2>
+
+<p>for unix it is quite simple</p>
+
+<pre><code>ssh -ND 1234 user@server.com
+</code></pre>
+
+<p>This will open a SOCKS proxy on port 1234 to the server. <strong>-N</strong> Tells prevents
+the console from executing any remote command. This way it will just open the
+tunnel and than sits there and waits for you to close it (with CTRL+C) later.
+With an additional <strong>-f</strong> it is also possible to completely background the
+process, but than its not as easy for you to close the tunnel later.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: use a proxy on a per-site basis]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/"/>
+    <updated>2011-08-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis</id>
+    <content type="html"><![CDATA[<p>in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites.</p>
+
+<p>For example you only want to use the proxy if you got to &#8220;hulu.com&#8221; and
+&#8220;pandora.com&#8221;.</p>
+
+<!-- more -->
+
+
+<p><em>I assume you at the moment you have setup the proxy as described in my last
+post</em></p>
+
+<p>The in my opinion most obvious solution is to use a <a href="http://en.wikipedia.org/wiki/Proxy_auto-config">Proxy auto-
+config</a>-file. Unfortunately
+this will not work in all browsers.</p>
+
+<p>First lets take a look at the <strong>proxy.pac</strong> file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function FindProxyForURL(url, host)
+</span><span class='line'>{
+</span><span class='line'>  // Use Proxy?
+</span><span class='line'>  if (dnsDomainIs(host, ".hulu.com") || dnsDomainIs(host, ".pandora.com")){
+</span><span class='line'>    return "SOCKS 127.0.0.1:1234";
+</span><span class='line'>  } else {
+</span><span class='line'>    return "DIRECT";
+</span><span class='line'>  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It returns the SOCKS address if its hulu or pandora otherwise it goes directly
+to the site. Save that file somewhere local or on a webserver.</p>
+
+<p>Setting up the Browsers:</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>&#8220;Automatic proxy configuration URL:&#8221;</strong></li>
+<li>enter a url or filepath to your proxy.pac</li>
+</ol>
+
+
+<h2>Opera</h2>
+
+<p>Opera also is able to use pac files, but due to it lack of SOCKS proxy support
+for a long time(Only got it with version 11) it does not support SOCKS proxies
+within a pac file. But there is a nice workaround.</p>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Proxy Servers</strong></li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to SOCKS, keep the other fields empty (this is exactly how to set it up permanently)</li>
+<li>click <strong>Exception List</strong></li>
+<li>choose <strong>Only use proxy for servers on the list</strong></li>
+<li>finally add pandora.com and hulu.com to that list.</li>
+</ol>
+
+
+<p>So instead of using the auto-config file you can use a whitelist. It can also
+be used the other way around as blacklist.</p>
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<p>There is an option within the system LAN Settings to use a automatic
+configuration script, but all three browsers completely ignore that script.
+They should be able to configure a SOCKS Proxy via a pac file but it didn&#8217;t
+work for me. I also didn&#8217;t find another way to do a per-site proxy
+configuration.</p>
+
+<p><em>Update:</em> I had a look at the proxy settings in Chrome with Ubuntu running
+gnome-shell. There is also a option to use a pac file but again the above
+settings will just be ignored.</p>
+
+<p><em>Update 2:</em> it seems this does not work anymore with hulu</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: configuring a local SOCKS Proxy in your browser]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/"/>
+    <updated>2011-08-14T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser</id>
+    <content type="html"><![CDATA[<p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+<!-- more -->
+
+
+<h2>Opera</h2>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> **Proxy Servers</li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to SOCKS, keep the other fields empty</li>
+</ol>
+
+
+<p>Opera doesn&#8217;t use the proxy settings for local addresses on default.</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>Manual proxy configuration</strong></li>
+<li>enter &#8220;127.0.0.1&#8221; into SOCKS Host</li>
+<li>enter &#8220;1234&#8221; into the Port field next to the SOCKS host</li>
+<li>choose <strong>SOCKS v5</strong></li>
+<li>enter &#8220;localhost, *.local&#8221; into the field next to &#8220;No Proxy for:&#8221;</li>
+</ol>
+
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<ol>
+<li>tool-icon -> <strong>Options</strong> -> <strong>Under the Hood</strong> -> <strong>Change proxy settings…</strong>(Chrome)<br/>
+gear-icon -> <strong>Preferences</strong> -> <strong>Advanced</strong> -> Proxies: <strong>Change Settings…</strong>
+(Safari)</li>
+</ol>
+
+
+<p>gear-icon -> <strong>Internet Options</strong> -> <strong>Connections</strong> (IE9)</p>
+
+<ol>
+<li><strong>LAN Settings</strong></li>
+<li>check <strong>Use a proxy for your LAN(…)</strong></li>
+<li>click <strong>Advanced</strong></li>
+<li>uncheck <strong>Use the same proxy server for all protocols</strong></li>
+<li>check <strong>bypass proxy server for local addresses</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to Socks, keep the other fields empty</li>
+</ol>
+
+
+<p>These three browsers basically use the system proxy configuration. So with
+this setup all other software which also uses these settings will also use the
+proxy.</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[using my ec2 instance to get a US IP]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/"/>
+    <updated>2011-08-12T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip</id>
+    <content type="html"><![CDATA[<p>Today I was surfing around and once again I got that ugly GEMA message on a
+youtube music video which prevented me from watching it. In the last months
+more and more videos got blocked this way and makes having a german IP a pain.</p>
+
+<p>But than I remembered that I can set up a Micro Instance in one of the US
+datacentrers and route my web traffic through it.</p>
+
+<!-- more -->
+
+
+<p>So what are my options to do this?</p>
+
+<ul>
+<li>setting up a proxy server on that instance</li>
+<li>establish a ssh tunnnel and use that as local proxy</li>
+<li>set up a VPN server on the instance and use that to reroute my traffic</li>
+</ul>
+
+
+<p>Because I don&#8217;t like having to set a proxy in each and every browser and app I
+have and than always having to keep my tunnel open I decided to look into the
+VPN solution. After all I can fall back to the tunnel at any time - for
+example if I need to connect to another VPN and still want to use a US IP or
+if I want to be connected to one of my other servers without having the signal
+bounce to the US and back.</p>
+
+<p>After deleting my existing instance(which was at the european data center) I
+looked at the available Community AMIs. One of them was called <strong>OpenVPN
+Access Server</strong> and after looking at the related site I thought this is
+exactly what I wanted and is free for 2 concurrent users. Theres also a
+<a href="http://openvpn.net/index.php/access-server/docs/admin-guides/499%0A-openvpn-access-server-ami.html">guide</a> on their site which describes how to make the
+initial setup. And even better it perfectly fits in the Free Tier Plan.</p>
+
+<p>Unfortunately I could nowhere find what the user is with which I can connect
+via ssh to the instance. After some more searching and trying I figured its
+the user <strong>ubuntu</strong> - nice of them to mention that nowhere in the guide.</p>
+
+<p>But even without even having to connect a single time via SSH to the instance
+it had started a nice webUI with full Admin interface and everything you need
+to connect to the VPN. It even offers pre-configured OpenVPN Clients for
+Windows and Mac and a guide for Unix.</p>
+
+<p>So now all I have to do is tell the OpenVPN Client to connect to my instance
+and I&#8217;m good to go. Now I just have to keep a look at my monthly traffic -
+there are <em>only</em> 15GB in and 15GB out in the Free Tier Plan. Could become a
+problem considering the fact I now have access to hulu/pandora and others.</p>
+
+<p>This usage doesn&#8217;t has anything to do with my initial plan to explore the
+cloud but an EC2 instance is basically just a virtual server with some
+additional services strapped on. Still I will look into the other services of
+the Free Tier Plan. I&#8217;m especially interested in the SimpleDB service,
+unfortunately only 25 <em>machine hours</em> are free per month - whatever they mean
+with machine hour. There are more <em>more cloudy</em> things I have in mind and will
+test at some point.</p>
+
+<p>PS: I also found a really nice monthly activities page for your account, shows
+exactly what and how much of it you used and how much it costs.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Messing around with the Amazon Cloud Part 1]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/"/>
+    <updated>2011-07-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1</id>
+    <content type="html"><![CDATA[<p>after getting the EC2 Instance up and running its time to install a basic
+development environment.</p>
+
+<ul>
+<li>zsh and screen makes as expected no problems.</li>
+<li>vim is unfortunately not compiled with ruby and I couldn&#8217;t find another one in the repository so it has to work without it</li>
+<li>rvm again no problem. As I&#8217;m writing this post ruby 1.9.2 is compiling, which given the power of a micro instance is slow perhaps to slow to do anything with it, but time will see.</li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>Next time setting up such a machine it may be no bad idea to get a bigger
+instance for a few hours, just to make the compiling faster.</p>
+
+<p>What surprised me was how minimal the installed linux were, no unnecessary
+packages just the stuff I want.</p>
+
+<p>Next steps:</p>
+
+<ul>
+<li>compiling nginx (with passenger) - this could take a while given the speed of the instance</li>
+<li>running a few of my small sinatra and rails apps</li>
+<li>will this instance be fast enough to do development?</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Messing around with the Amazon Cloud Part 0]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0/"/>
+    <updated>2011-07-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0</id>
+    <content type="html"><![CDATA[<p>so out of curiosity I just registered for <a href="http://aws.amazon.com/">Amazon Web
+Services</a> and my plan is to just use the free tier
+Amazon provides <a href="http://aws.amazon.com/free">link</a>.</p>
+
+<!-- more -->
+
+
+<p>Right now after about half an hour I have my first micro instance up and it
+runs <a href="http://aws.amazon.com/amazon-linux-ami/">Amazon Linux (Beta)</a>. Thats a
+maintained and supported Linux image which just fits in the free tier plan. As
+far as I can tell it has its background in the Red Hat camp and uses yum as
+package manager.</p>
+
+<p>The Management Console is at first glance is nice but you definitely have to
+get the hang of it. There&#8217;s many stuff to configure and setup, but more on
+that later.</p>
+
+<p>First downer: I couldn&#8217;t get the Archlinux images running, will have to look
+into that at some point.</p>
+
+<p>Another weird thing is that once you are in the management console your not
+really have control over your costs, but at least when you create a new
+instance it will show you if it will fit in the free plan.</p>
+
+<p>Next Steps are</p>
+
+<ul>
+<li>install zsh, vim, screen, ruby - rvm</li>
+<li>make the necessary setup for the above (basically import my rc files)</li>
+<li>watch how the micro instance performs</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to setup rails on redis]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis/"/>
+    <updated>2011-07-05T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis</id>
+    <content type="html"><![CDATA[<p>just some steps to setup rails 3.1 with redis as database, rspec for testing
+and watchr/spork to automate testing.</p>
+
+<!-- more -->
+
+
+<h1>scripts to run</h1>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>rails new app_name -OT
+</span><span class='line'>rake rspec:install
+</span><span class='line'>spork --bootstrap
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>add some gems to Gemfile</h1>
+
+<figure class='code'><figcaption><span>Gemfile</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Database</span>
+</span><span class='line'><span class="n">gem</span> <span class="n">redis</span>
+</span><span class='line'><span class="n">gem</span> <span class="n">redis_storage</span><span class="p">,</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">.</span><span class="mi">2</span><span class="o">.</span><span class="mi">9</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">gem</span> <span class="n">therubyracer</span>    <span class="c1"># to get coffee script running</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># testing</span>
+</span><span class='line'><span class="n">group</span> <span class="ss">:test</span><span class="p">,</span> <span class="ss">:development</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="n">rspec</span><span class="o">-</span><span class="n">rails</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="n">mocha</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="n">watchr</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="n">spork</span><span class="p">,</span> <span class="o">~&gt;</span> <span class="mi">0</span><span class="o">.</span><span class="mi">9</span><span class="o">.</span><span class="mi">0</span><span class="o">.</span><span class="n">rc</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>add or edit those files</h1>
+
+<figure class='code'><figcaption><span>.rspec</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">--</span><span class="n">colour</span>
+</span><span class='line'><span class="o">--</span><span class="nb">format</span> <span class="n">d</span>
+</span><span class='line'><span class="o">--</span><span class="n">drb</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>.watchr</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">def</span> <span class="nf">run_spec</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">unless</span> <span class="no">File</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2"> does not exist&quot;</span>
+</span><span class='line'>    <span class="k">return</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Running </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="nb">system</span> <span class="s2">&quot;bundle exec rspec </span><span class="si">#{</span><span class="n">file</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>  <span class="nb">puts</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">watch</span><span class="p">(</span><span class="s2">&quot;spec/.*/*_spec\.rb&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">run_spec</span> <span class="n">match</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">watch</span><span class="p">(</span><span class="s2">&quot;app/(.*/.*)\.rb&quot;</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">match</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">run_spec</span> <span class="sx">%{spec/</span><span class="si">#{</span><span class="n">match</span><span class="o">[</span><span class="mi">1</span><span class="o">]</span><span class="si">}</span><span class="sx">_spec.rb}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>lib/tasks/watchr.rake</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">desc</span> <span class="s2">&quot;Run watchr&quot;</span>
+</span><span class='line'><span class="n">task</span> <span class="ss">:watchr</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">sh</span> <span class="sx">%{bundle exec watchr .watchr}</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>config/application.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">config</span><span class="o">.</span><span class="n">generators</span> <span class="k">do</span> <span class="o">|</span><span class="n">g</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">orm</span>             <span class="ss">:redis</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">template_engine</span> <span class="ss">:haml</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">test_framework</span>  <span class="ss">:rspec</span>
+</span><span class='line'>  <span class="n">g</span><span class="o">.</span><span class="n">stylesheet_engine</span> <span class="o">=</span> <span class="ss">:sass</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>spec/spec_helper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="n">spork</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">prefork</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1"># Loading more in this block will cause your tests to run faster. However,</span>
+</span><span class='line'>  <span class="c1"># if you change any configuration or code from libraries loaded here, youll</span>
+</span><span class='line'>  <span class="c1"># need to restart spork for it take effect.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># This file is copied to spec/ when you run rails generate rspec:install</span>
+</span><span class='line'>  <span class="no">ENV</span><span class="o">[</span><span class="s2">&quot;RAILS_ENV&quot;</span><span class="o">]</span> <span class="o">||=</span> <span class="nb">test</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="no">File</span><span class="o">.</span><span class="n">expand_path</span><span class="p">(</span><span class="s2">&quot;../../config/environment&quot;</span><span class="p">,</span> <span class="bp">__FILE__</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">require</span> <span class="n">rspec</span><span class="o">/</span><span class="n">rails</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># Requires supporting ruby files with custom matchers and macros, etc,</span>
+</span><span class='line'>  <span class="c1"># in spec/support/ and its subdirectories.</span>
+</span><span class='line'>  <span class="no">Dir</span><span class="o">[</span><span class="no">Rails</span><span class="o">.</span><span class="n">root</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;spec/support/**/*.rb&quot;</span><span class="p">)</span><span class="o">].</span><span class="n">each</span> <span class="p">{</span><span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="nb">require</span> <span class="n">f</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">mock_with</span> <span class="ss">:mocha</span>
+</span><span class='line'>    <span class="n">config</span><span class="o">.</span><span class="n">before</span> <span class="ss">:each</span> <span class="k">do</span>
+</span><span class='line'>      <span class="vg">$db</span><span class="o">.</span><span class="n">flushdb</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">Spork</span><span class="o">.</span><span class="n">each_run</span> <span class="k">do</span>
+</span><span class='line'>  <span class="c1"># This code will be run each time you run your specs</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[my first gem 'redis_storage']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage/"/>
+    <updated>2011-06-25T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage</id>
+    <content type="html"><![CDATA[<p>just release my first gem on rubygems
+<a href="https://rubygems.org/gems/redis_storage">redis_storage</a> I wanted to call it
+redis_record but their already is a gem with that name.</p>
+
+<p>Its a redis interface for storing models in redis - or to be more exact
+storing there attributes as json.</p>
+
+<!-- more -->
+
+
+<p>Basically I just got sick rewriting the same logic over and over again for
+each model of my little sinatra apps so this evolved. Then I wanted to write a
+new rails app an thought having this in a gem would be really nice, and a
+generator would be awesome.</p>
+
+<p>If you interested check it out on
+<a href="http://github.com/sch1zo/redis_storage">github</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveModel Lint Test for RSpec]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec/"/>
+    <updated>2011-06-23T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec</id>
+    <content type="html"><![CDATA[<p><a href="http://library.edgecase.com/Rails/2010/10/30%0A/activemodel-lint-test-for-rspec.html">ActiveModel Lint Test for RSpec</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[finally jumped to vim...]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/20/finally-jumped-to-vim/"/>
+    <updated>2011-06-20T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/20/finally-jumped-to-vim</id>
+    <content type="html"><![CDATA[<p>…and I love it.</p>
+
+<p>I have to admit that it took me really long before I took the step to use vim.
+Before I used the typical graphical editors(like gedit/sublime_text) to write
+my code. Full fledged IDE where not really preferred way of coding, but till
+now I ad least needed my mouse to do some fancy editing stuff. I knew how the
+basic controlls in vi are but felt awkward to use them, so most of the time
+when I needed a terminal editor I used nano.</p>
+
+<!-- more -->
+
+
+<p>Then, last week I made another approach to use vim and the first thing I did
+was getting a really good .vimrc - like most of this stuff I found a package
+on github <a href="https://github.com/carlhuda/janus">janus</a>. The other thing I did
+was not trying to use all the crazy stuff in vim from the get go and instead
+just use the stuff I already knew a just add new tricks when I thought <strong>hey,
+there has to be a better/fancier/faster way to do this</strong></p>
+
+<p>Now after using vim like this I don&#8217;t want to go back to another editor and I
+just know the tip of the iceberg. There much more vim magic to learn. Only for
+one thing I still like a graphical editor like sublime_text and thats for
+browsing code, just looking at various source files without the need of
+changing it or even copying parts.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How not to write code...]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code/"/>
+    <updated>2011-06-14T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code</id>
+    <content type="html"><![CDATA[<p>over the last weeks I had to create a GUI in Java with three other fellow
+students. It was part of one of our courses which is about Graphical User
+Interfaces and after creating wireframes and a design concept we only had
+three weeks time to implement all of it, including parsers for <em>nine</em> files -
+a few of them were xml but not the nice kind of xml - and a configuration
+file.</p>
+
+<!-- more -->
+
+
+<p>We didn&#8217;t had time to make any kind of project plan or even a software design.
+We had to code fast to get all aspects working in time. Everybody simply got a
+few pieces to implement and at the end we somehow hacked it together. We
+managed to get most of it and it worked as desired but the codebase itself is
+a mess.</p>
+
+<p>On the one hand its simple because Java and Swing IMHO always produces messy
+code but of cause the main reason was probably just because we just hacked
+things together to get them working.</p>
+
+<p>At least we made sure that nobody will ever want to use our code for there
+projects.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Standalone autotest]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/"/>
+    <updated>2011-05-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/16/standalone-autotest</id>
+    <content type="html"><![CDATA[<p>after setting up rspec here is some code to get autotest working with rspec.</p>
+
+<p>In addition it shows nice notifications on every test run, so you don&#8217;t even
+have to lock in the console window.</p>
+
+<p>You only have to save the following gist as <strong>.autotest</strong></p>
+
+<p>[edit:] removed the Autotest.add_discovery part from the gist as mentioned in
+the comments. Just add a <strong>.rspec</strong> file in the same directory to get autotest
+speak RSpec</p>
+
+<p><a href="http://www.stupididea.com/2009/03/15/non-rails-autotest-rspec-%0Alibnotify-linux/">Source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RSpec 2 standalone rake task]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task/"/>
+    <updated>2011-05-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task</id>
+    <content type="html"><![CDATA[<p>just to save me some time the next time I need this.</p>
+
+<p>this task will simply run all <strong>_spec.rb</strong> files within your <strong>spec</strong> folder</p>
+
+<p><a href="http://duckpunching.com/rspec-2-0-rake-tasks">Source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[That's what she said: teaching AI the proper respond to, 'I was trying all night, but I just could not get it in!']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in/"/>
+    <updated>2011-05-01T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in</id>
+    <content type="html"><![CDATA[<p><a href="http://www.newscientist.com/blogs/onepercent/2011/04/software-works-out-%0Awhether-tha.html">Thats what she said: teaching AI the proper respond to, I was trying all
+night, but I just could not get it
+in!</a></p>
+
+<p><a href="http://ohnoros.co/post/5050746093">ohnorosco</a>:</p>
+
+<blockquote><p>The best academic paper you’ll read all year. From two University of
+Washington Computer Scientists.
+(<a href="http://www.cs.washington.edu/homes/brun/pubs/pubs/Kiddon11.pdf">PDF</a>)</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[it's kinda nice to develop for Windows Phone 7]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7/"/>
+    <updated>2011-04-17T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7</id>
+    <content type="html"><![CDATA[<p>cause I had nothing better to do and <a href="http://live.visitmix.com/">MIX11</a> just
+ended, I tried to build a little app for WP7. nothing new just a local app
+which does the same as my sinatra app <a href="http://hm.eger-andreas.de">News Filter</a>
+for the bulletin board at Hochschule München
+(<a href="https://github.com/sch1zo/hm-news-filter">source</a>)</p>
+
+<!-- more -->
+
+
+<p>So, first a word or two the the language C# and Silverlight. It wasn&#8217;t the
+first time for me to use C# but it was almost a year ago since my last use,
+but C# is not so different to Java so it was no problem to get into it again.
+Silverlight on the other hand was new to me and I had to search a little bit
+to find the right methods to use, but also no problem.</p>
+
+<p>The development tools are awesome, Visual Studio 2010, great emulator and nice
+application templates which let you start right into the app without having to
+build all basic controls. So my only problem was to find the right libraries
+and controls to make do the work.</p>
+
+<p>But lacking a device with WP7 I don&#8217;t think i will do much at the moment,
+perhaps later this year with the Mango SDK. Also I will have a look at the new
+devices in fall.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[damn is ruby slow - at least compared to c++]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c/"/>
+    <updated>2011-04-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow&#8212;at-least-compared-to-c</id>
+    <content type="html"><![CDATA[<p>ok thats nothing new, yet the difference was a little bit surprising.</p>
+
+<p>In an earlier post I described the <em>puzzleSolver</em> project and before starting
+to implement parts of it in c++ I build a Ruby prototype. The prototype
+generated 1000 random puzzle pieces and later generated a quality between
+every 4000 puzzle edges, thats about 8.000.000 calculations. The Ruby
+Prototype needs <strong>3 minutes</strong> to finish that calculation.</p>
+
+<!-- more -->
+
+
+<p>The c++ version does exactly the same, it has the same structure and
+algorithm. Now the calculations are done in <strong>under 1 second</strong> for 1000
+pieces.</p>
+
+<p>As I sad, its not surprising that the c++ version is way faster than the Ruby
+prototype. But a difference of <strong>200 times faster</strong> was surprising.</p>
+
+<p>But I don&#8217;t want to make Ruby bad, I love Ruby, without the prototype it would
+have been way more difficult to build the c++ version. And of cause the time
+building the two versions where different, the Ruby prototype was working
+within a few hours, plus another few to optimize the algorithm. The c++
+version toke a few days till it was working like the prototype, but that might
+also had to do that my last c++ encounter was like two years ago. But even so
+I just had to re implement the existing algorithm. Without that it would have
+taken even longer.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[damn is it long ago since the last time I used c++]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c/"/>
+    <updated>2011-04-06T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c</id>
+    <content type="html"><![CDATA[<p>for one thing I just want to test if email publishing works as expected, for
+another thing I just realized how long it is ago since the last time I really
+used c++.</p>
+
+<!-- more -->
+
+
+<p>I have to use it for a project in one of my courses and I both <em>hate</em> to use
+it and <em>like</em> to get into it again. It&#8217;s just so different compared to
+something like Java or even Ruby.</p>
+
+<p>In the lecture we formed a project team and develop a automatic jigsaw puzzle
+solver. Besides a team who analyses the puzzle pieces and one which presents
+and animates the puzzle and the puzzle solving I&#8217;m in the team which tries to
+solve the puzzle with the provided data from team one. I&#8217;m really curious if
+we can manage to solve something like a 1000 piece puzzle.</p>
+]]></content>
+  </entry>
   
 </feed>

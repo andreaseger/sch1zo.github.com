@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: github | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/github/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[my first gem 'redis_storage']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage/"/>
+    <updated>2011-06-25T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage</id>
+    <content type="html"><![CDATA[<p>just release my first gem on rubygems
+<a href="https://rubygems.org/gems/redis_storage">redis_storage</a> I wanted to call it
+redis_record but their already is a gem with that name.</p>
+
+<p>Its a redis interface for storing models in redis - or to be more exact
+storing there attributes as json.</p>
+
+<!-- more -->
+
+
+<p>Basically I just got sick rewriting the same logic over and over again for
+each model of my little sinatra apps so this evolved. Then I wanted to write a
+new rails app an thought having this in a gem would be really nice, and a
+generator would be awesome.</p>
+
+<p>If you interested check it out on
+<a href="http://github.com/sch1zo/redis_storage">github</a></p>
+]]></content>
+  </entry>
+  
+</feed>

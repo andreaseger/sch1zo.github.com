@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: browser | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/browser/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: configuring a local SOCKS Proxy in your browser]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/"/>
+    <updated>2011-08-14T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser</id>
+    <content type="html"><![CDATA[<p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+<!-- more -->
+
+
+<h2>Opera</h2>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> **Proxy Servers</li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in "127.0.0.1" and "1234" in the field next to SOCKS, keep the other fields empty</li>
+</ol>
+
+
+<p>Opera doesn't use the proxy settings for local addresses on default.</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>Manual proxy configuration</strong></li>
+<li>enter "127.0.0.1" into SOCKS Host</li>
+<li>enter "1234" into the Port field next to the SOCKS host</li>
+<li>choose <strong>SOCKS v5</strong></li>
+<li>enter "localhost, *.local" into the field next to "No Proxy for:"</li>
+</ol>
+
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<ol>
+<li>tool-icon -> <strong>Options</strong> -> <strong>Under the Hood</strong> -> <strong>Change proxy settings…</strong>(Chrome)<br/>
+gear-icon -> <strong>Preferences</strong> -> <strong>Advanced</strong> -> Proxies: <strong>Change Settings…</strong>
+(Safari)</li>
+</ol>
+
+
+<p>gear-icon -> <strong>Internet Options</strong> -> <strong>Connections</strong> (IE9)</p>
+
+<ol>
+<li><strong>LAN Settings</strong></li>
+<li>check <strong>Use a proxy for your LAN(…)</strong></li>
+<li>click <strong>Advanced</strong></li>
+<li>uncheck <strong>Use the same proxy server for all protocols</strong></li>
+<li>check <strong>bypass proxy server for local addresses</strong></li>
+<li>fill in "127.0.0.1" and "1234" in the field next to Socks, keep the other fields empty</li>
+</ol>
+
+
+<p>These three browsers basically use the system proxy configuration. So with
+this setup all other software which also uses these settings will also use the
+proxy.</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+]]></content>
+  </entry>
+  
+</feed>

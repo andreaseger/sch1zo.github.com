@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HOWTO: establishing a SSH tunnel and use it as SOCKS proxy - meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="I have one last post regarding my plan to reroute certain web traffic through
+my server. This post maybe should have been the first in this little &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HOWTO: Establishing a SSH Tunnel and Use It as SOCKS Proxy</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+<!-- more -->
+
+
+<h2>Putty</h2>
+
+<p>I&#8217;d like to think that you already have a session which connects to your
+server via ssh. Load this session and go in the menu to the item
+<strong>Connection</strong> -> <strong>SSH</strong> -> <strong>Tunnels</strong>.</p>
+
+<p>Enter the portnumber of your choice into the field <strong>Source Port</strong> for example
+1234.</p>
+
+<p>Than select <em>Dynamic</em> and <em>Auto</em> and click <strong>Add</strong>. You will now see <strong>D1234</strong>
+in the list above.</p>
+
+<p>You can now go back the the sessions screen, save your changes and open the
+connection.</p>
+
+<h2>unix</h2>
+
+<p>for unix it is quite simple</p>
+
+<pre><code>ssh -ND 1234 user@server.com
+</code></pre>
+
+<p>This will open a SOCKS proxy on port 1234 to the server. <strong>-N</strong> Tells prevents
+the console from executing any remote command. This way it will just open the
+tunnel and than sits there and waits for you to close it (with CTRL+C) later.
+With an additional <strong>-f</strong> it is also possible to completely background the
+process, but than its not as easy for you to close the tunnel later.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andreas Eger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/socks/'>SOCKS</a>, <a class='category' href='/blog/categories/proxy/'>proxy</a>, <a class='category' href='/blog/categories/putty/'>putty</a>, <a class='category' href='/blog/categories/ssh/'>ssh</a>, <a class='category' href='/blog/categories/tumblr/'>tumblr</a>, <a class='category' href='/blog/categories/tunnel/'>tunnel</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/" data-via="sch1zo" data-counturl="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/" title="Previous Post: HOWTO: use a proxy on a per-site basis">&laquo; HOWTO: use a proxy on a per-site basis</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/" title="next Post: how to compile a fast imagemagick">how to compile a fast imagemagick &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">compiling ruby 1.8.7 with gcc 4.6.*</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">how to compile a fast imagemagick</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: establishing a SSH tunnel and use it as SOCKS proxy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">HOWTO: use a proxy on a per-site basis</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

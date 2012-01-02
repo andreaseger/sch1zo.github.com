@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: windows phone 7 | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/windows-phone-7/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[it's kinda nice to develop for Windows Phone 7]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7/"/>
+    <updated>2011-04-17T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7</id>
+    <content type="html"><![CDATA[<p>cause I had nothing better to do and <a href="http://live.visitmix.com/">MIX11</a> just
+ended, I tried to build a little app for WP7. nothing new just a local app
+which does the same as my sinatra app <a href="http://hm.eger-andreas.de">News Filter</a>
+for the bulletin board at Hochschule München
+(<a href="https://github.com/sch1zo/hm-news-filter">source</a>)</p>
+
+<!-- more -->
+
+
+<p>So, first a word or two the the language C# and Silverlight. It wasn't the
+first time for me to use C# but it was almost a year ago since my last use,
+but C# is not so different to Java so it was no problem to get into it again.
+Silverlight on the other hand was new to me and I had to search a little bit
+to find the right methods to use, but also no problem.</p>
+
+<p>The development tools are awesome, Visual Studio 2010, great emulator and nice
+application templates which let you start right into the app without having to
+build all basic controls. So my only problem was to find the right libraries
+and controls to make do the work.</p>
+
+<p>But lacking a device with WP7 I don't think i will do much at the moment,
+perhaps later this year with the Mango SDK. Also I will have a look at the new
+devices in fall.</p>
+]]></content>
+  </entry>
+  
+</feed>

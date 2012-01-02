@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ruby | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-02T07:09:16+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[compiling ruby 1.8.7 with gcc 4.6.*]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46/"/>
+    <updated>2011-09-09T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46</id>
+    <content type="html"><![CDATA[<p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can't compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+<!-- more -->
+
+
+<p>After some googling I just grabbed the source from github and compiled it
+myself without relying on the default installer.</p>
+
+<p>You will get 2 errors but they basically the same. While building ruby at some
+point two files get generated <code>callback.func</code> and <code>cbtables.func</code>.
+Unfortunately later on exactly these two files are wrong…</p>
+
+<p>The - when you know what to do - easy solution is the following</p>
+
+<p>``` sh
+cd ext/dl
+rm callback.func cbtables.func
+touch callback.func cbtables.func</p>
+
+<p>ruby mkcallback.rb >> callback.func
+ruby mkcbtables.rb >> cbtables.func
+```</p>
+
+<p>After this go back to the root source folder and run <code>make</code> again. Make will
+start at the position of the last error, use the new files and finish
+building.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[my first gem 'redis_storage']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage/"/>
+    <updated>2011-06-25T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage</id>
+    <content type="html"><![CDATA[<p>just release my first gem on rubygems
+<a href="https://rubygems.org/gems/redis_storage">redis_storage</a> I wanted to call it
+redis_record but their already is a gem with that name.</p>
+
+<p>Its a redis interface for storing models in redis - or to be more exact
+storing there attributes as json.</p>
+
+<!-- more -->
+
+
+<p>Basically I just got sick rewriting the same logic over and over again for
+each model of my little sinatra apps so this evolved. Then I wanted to write a
+new rails app an thought having this in a gem would be really nice, and a
+generator would be awesome.</p>
+
+<p>If you interested check it out on
+<a href="http://github.com/sch1zo/redis_storage">github</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Standalone autotest]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/"/>
+    <updated>2011-05-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/16/standalone-autotest</id>
+    <content type="html"><![CDATA[<p>after setting up rspec here is some code to get autotest working with rspec.</p>
+
+<p>In addition it shows nice notifications on every test run, so you don't even
+have to lock in the console window.</p>
+
+<p>You only have to save the following gist as <strong>.autotest</strong></p>
+
+<p>[edit:] removed the Autotest.add_discovery part from the gist as mentioned in
+the comments. Just add a <strong>.rspec</strong> file in the same directory to get autotest
+speak RSpec</p>
+
+<p><a href="http://www.stupididea.com/2009/03/15/non-rails-autotest-rspec-%0Alibnotify-linux/">Source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RSpec 2 standalone rake task]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task/"/>
+    <updated>2011-05-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task</id>
+    <content type="html"><![CDATA[<p>just to save me some time the next time I need this.</p>
+
+<p>this task will simply run all <strong>_spec.rb</strong> files within your <strong>spec</strong> folder</p>
+
+<p><a href="http://duckpunching.com/rspec-2-0-rake-tasks">Source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[damn is ruby slow - at least compared to c++]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c/"/>
+    <updated>2011-04-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c</id>
+    <content type="html"><![CDATA[<p>ok thats nothing new, yet the difference was a little bit surprising.</p>
+
+<p>In an earlier post I described the <em>puzzleSolver</em> project and before starting
+to implement parts of it in c++ I build a Ruby prototype. The prototype
+generated 1000 random puzzle pieces and later generated a quality between
+every 4000 puzzle edges, thats about 8.000.000 calculations. The Ruby
+Prototype needs <strong>3 minutes</strong> to finish that calculation.</p>
+
+<!-- more -->
+
+
+<p>The c++ version does exactly the same, it has the same structure and
+algorithm. Now the calculations are done in <strong>under 1 second</strong> for 1000
+pieces.</p>
+
+<p>As I sad, its not surprising that the c++ version is way faster than the Ruby
+prototype. But a difference of <strong>200 times faster</strong> was surprising.</p>
+
+<p>But I don't want to make Ruby bad, I love Ruby, without the prototype it would
+have been way more difficult to build the c++ version. And of cause the time
+building the two versions where different, the Ruby prototype was working
+within a few hours, plus another few to optimize the algorithm. The c++
+version toke a few days till it was working like the prototype, but that might
+also had to do that my last c++ encounter was like two years ago. But even so
+I just had to re implement the existing algorithm. Without that it would have
+taken even longer.</p>
+]]></content>
+  </entry>
+  
+</feed>
