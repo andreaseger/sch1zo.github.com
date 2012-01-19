@@ -4,7 +4,7 @@
   <title><![CDATA[meh...]]></title>
   <link href="http://sch1zo.github.com/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-01-02T22:31:42+01:00</updated>
+  <updated>2012-01-19T18:47:08+01:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How Ruby's throw works and whats awesome about Sinatra's halt]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/"/>
+    <updated>2012-01-19T18:39:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt</id>
+    <content type="html"><![CDATA[<p>Just discovered two great blog posts. ( via <a href="http://rubyweekly.com/">Ruby Weekly</a>)</p>
+
+<ul>
+<li><a href="http://rubylearning.com/blog/2011/07/12/throw-catch-raise-rescue-im-so-confused/">Throw, Catch, Raise, Rescue… I’m so confused!</a> by Avid Grimm</li>
+<li><a href="http://myronmars.to/n/dev-blog/2012/01/why-sinatras-halt-is-awesome">Why Sinatra&#8217;s Halt is Awesome</a> by Myron Marston</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Octopress for the win]]></title>
@@ -920,30 +935,6 @@ version toke a few days till it was working like the prototype, but that might
 also had to do that my last c++ encounter was like two years ago. But even so
 I just had to re implement the existing algorithm. Without that it would have
 taken even longer.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[damn is it long ago since the last time I used c++]]></title>
-    <link href="http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c/"/>
-    <updated>2011-04-06T00:00:00+02:00</updated>
-    <id>http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c</id>
-    <content type="html"><![CDATA[<p>for one thing I just want to test if email publishing works as expected, for
-another thing I just realized how long it is ago since the last time I really
-used c++.</p>
-
-<!-- more -->
-
-
-<p>I have to use it for a project in one of my courses and I both <em>hate</em> to use
-it and <em>like</em> to get into it again. It&#8217;s just so different compared to
-something like Java or even Ruby.</p>
-
-<p>In the lecture we formed a project team and develop a automatic jigsaw puzzle
-solver. Besides a team who analyses the puzzle pieces and one which presents
-and animates the puzzle and the puzzle solving I&#8217;m in the team which tries to
-solve the puzzle with the provided data from team one. I&#8217;m really curious if
-we can manage to solve something like a 1000 piece puzzle.</p>
 ]]></content>
   </entry>
   
