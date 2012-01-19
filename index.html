@@ -115,7 +115,7 @@ Why Sinatra&#8217;s Halt is &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s Throw Works and Whats Awesome About Sinatra&#8217;s Halt</a></h1>
+      <h1 class="entry-title"><a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the Win</a></h1>
     
     
       <p class="meta">
@@ -131,225 +131,382 @@ Why Sinatra&#8217;s Halt is &hellip;">
   
 
 
-<time datetime="2012-01-19T18:39:00+01:00" pubdate data-updated="true">Jan 19<span>th</span>, 2012</time>
+<time datetime="2012-01-02T05:02:00+01:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2012</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>Just discovered two great blog posts. ( via <a href="http://rubyweekly.com/">Ruby Weekly</a>)</p>
+  <div class="entry-content"><p>New Year, new Blog.</p>
+
+<p>I decided to kill my tumblr and start this octopress blog. At the moment I
+just imported most of the old posts and fixed tags/categories, but I still
+have to check all links and move some images.</p>
+
+<p>And just for the record here are a few of the snippets used to convert the
+posts.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># download and extract posts in jekyll format</span>
+</span><span class='line'>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
+</span><span class='line'>ruby -r <span class="s1">&#39;./tumblr&#39;</span> -e <span class="s1">&#39;Jekyll::Tumblr.process(&quot;http://sch1zo.tumblr.com&quot;,format=&quot;md&quot;)&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exchange tags for categories</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==4 and s/tags/categories/;close ARGV if eof&#39;</span> *
+</span><span class='line'>
+</span><span class='line'><span class="c"># add a tumbler tag/category to each post</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==5 and s/^/- tumblr\n/;close ARGV if eof&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
+after searching for this kind a task, and I didn&#8217;t want to convert them to Ruby
+or anything else.</p>
+
+<p>Unfortunatly I couldn&#8217;t find a way to write the date into the meta data of the
+file. Perhaps I&#8217;m just to tired&#8230;</p>
+
+<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
+by hand.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -pie <span class="s1">&#39;$.==4 and $_.sub!(/^/, &quot;date: #{&quot;2011-03-02-here should be the current filename&quot;.match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n&quot;)&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Compiling Ruby 1.8.7 With Gcc 4.6.*</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-09T00:00:00+02:00" pubdate data-updated="true">Sep 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can&#8217;t compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">How to Compile a Fast Imagemagick</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-06T00:00:00+02:00" pubdate data-updated="true">Sep 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
+some image processing on a new webapp I&#8217;m building - creating thumbnails of
+uploaded images to be precise.</p>
+
+<p>The initial choice was to simply use the the package from the repository. But
+it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
+wallpaper which I used to test it( time sad a little above 7 seconds).</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: Establishing a SSH Tunnel and Use It as SOCKS Proxy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">HOWTO: Use a Proxy on a Per-site Basis</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites.</p>
+
+<p>For example you only want to use the proxy if you got to &#8220;hulu.com&#8221; and
+&#8220;pandora.com&#8221;.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">HOWTO: Configuring a Local SOCKS Proxy in Your Browser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+02:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Using My Ec2 Instance to Get a US IP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-12T00:00:00+02:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I was surfing around and once again I got that ugly GEMA message on a
+youtube music video which prevented me from watching it. In the last months
+more and more videos got blocked this way and makes having a german IP a pain.</p>
+
+<p>But than I remembered that I can set up a Micro Instance in one of the US
+datacentrers and route my web traffic through it.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Messing Around With the Amazon Cloud Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-15T00:00:00+02:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>after getting the EC2 Instance up and running its time to install a basic
+development environment.</p>
 
 <ul>
-<li><a href="http://rubylearning.com/blog/2011/07/12/throw-catch-raise-rescue-im-so-confused/">Throw, Catch, Raise, Rescue… I’m so confused!</a> by Avid Grimm</li>
-<li><a href="http://myronmars.to/n/dev-blog/2012/01/why-sinatras-halt-is-awesome">Why Sinatra&#8217;s Halt is Awesome</a> by Myron Marston</li>
+<li>zsh and screen makes as expected no problems.</li>
+<li>vim is unfortunately not compiled with ruby and I couldn&#8217;t find another one in the repository so it has to work without it</li>
+<li>rvm again no problem. As I&#8217;m writing this post ruby 1.9.2 is compiling, which given the power of a micro instance is slow perhaps to slow to do anything with it, but time will see.</li>
 </ul>
 
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the Win</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-02T05:02:00+01:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>New Year, new Blog.</p>
-
-<p>I decided to kill my tumblr and start this octopress blog. At the moment I
-just imported most of the old posts and fixed tags/categories, but I still
-have to check all links and move some images.</p>
-
-<p>And just for the record here are a few of the snippets used to convert the
-posts.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># download and extract posts in jekyll format</span>
-</span><span class='line'>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
-</span><span class='line'>ruby -r <span class="s1">&#39;./tumblr&#39;</span> -e <span class="s1">&#39;Jekyll::Tumblr.process(&quot;http://sch1zo.tumblr.com&quot;,format=&quot;md&quot;)&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># exchange tags for categories</span>
-</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==4 and s/tags/categories/;close ARGV if eof&#39;</span> *
-</span><span class='line'>
-</span><span class='line'><span class="c"># add a tumbler tag/category to each post</span>
-</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==5 and s/^/- tumblr\n/;close ARGV if eof&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
-after searching for this kind a task, and I didn&#8217;t want to convert them to Ruby
-or anything else.</p>
-
-<p>Unfortunatly I couldn&#8217;t find a way to write the date into the meta data of the
-file. Perhaps I&#8217;m just to tired&#8230;</p>
-
-<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
-by hand.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -pie <span class="s1">&#39;$.==4 and $_.sub!(/^/, &quot;date: #{&quot;2011-03-02-here should be the current filename&quot;.match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n&quot;)&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the Win</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-02T05:02:00+01:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>New Year, new Blog.</p>
-
-<p>I decided to kill my tumblr and start this octopress blog. At the moment I
-just imported most of the old posts and fixed tags/categories, but I still
-have to check all links and move some images.</p>
-
-<p>And just for the record here are a few of the snippets used to convert the
-posts.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># download and extract posts in jekyll format</span>
-</span><span class='line'>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
-</span><span class='line'>ruby -r <span class="s1">&#39;./tumblr&#39;</span> -e <span class="s1">&#39;Jekyll::Tumblr.process(&quot;http://sch1zo.tumblr.com&quot;,format=&quot;md&quot;)&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># exchange tags for categories</span>
-</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==4 and s/tags/categories/;close ARGV if eof&#39;</span> *
-</span><span class='line'>
-</span><span class='line'><span class="c"># add a tumbler tag/category to each post</span>
-</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==5 and s/^/- tumblr\n/;close ARGV if eof&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
-after searching for this kind a task, and I didn&#8217;t want to convert them to Ruby
-or anything else.</p>
-
-<p>Unfortunatly I couldn&#8217;t find a way to write the date into the meta data of the
-file. Perhaps I&#8217;m just to tired&#8230;</p>
-
-<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
-by hand.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -pie <span class="s1">&#39;$.==4 and $_.sub!(/^/, &quot;date: #{&quot;2011-03-02-here should be the current filename&quot;.match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n&quot;)&#39;</span> *
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Compiling Ruby 1.8.7 With Gcc 4.6.*</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-09T00:00:00+02:00" pubdate data-updated="true">Sep 9<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
-can&#8217;t compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
-have the same issue, but at least 1.9.2 or newer works.</p>
-
-<p>But I wanted ree installed because its load requirements faster than the newer
-build which is important when developing rails.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Read on &rarr;</a>
     </footer>
   
 
@@ -361,7 +518,7 @@ build which is important when developing rails.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Compiling Ruby 1.8.7 With Gcc 4.6.*</a></h1>
+      <h1 class="entry-title"><a href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0/">Messing Around With the Amazon Cloud Part 0</a></h1>
     
     
       <p class="meta">
@@ -377,209 +534,22 @@ build which is important when developing rails.</p>
   
 
 
-<time datetime="2011-09-09T00:00:00+02:00" pubdate data-updated="true">Sep 9<span>th</span>, 2011</time>
+<time datetime="2011-07-15T00:00:00+02:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
-can&#8217;t compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
-have the same issue, but at least 1.9.2 or newer works.</p>
-
-<p>But I wanted ree installed because its load requirements faster than the newer
-build which is important when developing rails.</p>
+  <div class="entry-content"><p>so out of curiosity I just registered for <a href="http://aws.amazon.com/">Amazon Web
+Services</a> and my plan is to just use the free tier
+Amazon provides <a href="http://aws.amazon.com/free">link</a>.</p>
 
 </div>
   
   
     <footer>
-      <a rel="full-article" href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">How to Compile a Fast Imagemagick</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-06T00:00:00+02:00" pubdate data-updated="true">Sep 6<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
-some image processing on a new webapp I&#8217;m building - creating thumbnails of
-uploaded images to be precise.</p>
-
-<p>The initial choice was to simply use the the package from the repository. But
-it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
-wallpaper which I used to test it( time sad a little above 7 seconds).</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">How to Compile a Fast Imagemagick</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-09-06T00:00:00+02:00" pubdate data-updated="true">Sep 6<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
-some image processing on a new webapp I&#8217;m building - creating thumbnails of
-uploaded images to be precise.</p>
-
-<p>The initial choice was to simply use the the package from the repository. But
-it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
-wallpaper which I used to test it( time sad a little above 7 seconds).</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: Establishing a SSH Tunnel and Use It as SOCKS Proxy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have one last post regarding my plan to reroute certain web traffic through
-my server.</p>
-
-<p>This post maybe should have been the first in this little series, because I
-will show you how to setup a SOCKS proxy to your server.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: Establishing a SSH Tunnel and Use It as SOCKS Proxy</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have one last post regarding my plan to reroute certain web traffic through
-my server.</p>
-
-<p>This post maybe should have been the first in this little series, because I
-will show you how to setup a SOCKS proxy to your server.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0/">Read on &rarr;</a>
     </footer>
   
 
@@ -605,19 +575,19 @@ will show you how to setup a SOCKS proxy to your server.</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s throw works and whats awesome about Sinatra&#8217;s halt</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
-      </li>
-    
-      <li class="post">
         <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
       </li>
     
       <li class="post">
         <a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">compiling ruby 1.8.7 with gcc 4.6.*</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">how to compile a fast imagemagick</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: establishing a SSH tunnel and use it as SOCKS proxy</a>
       </li>
     
   </ul>
