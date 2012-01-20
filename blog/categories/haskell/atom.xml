@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Haskell | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/haskell/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-01-20T15:18:13+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Haskell]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/20/haskell/"/>
+    <updated>2012-01-20T14:44:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/20/haskell</id>
+    <content type="html"><![CDATA[<p>Cause I keep looking around for another interesting language to learn I found this nice Haskell quickstart tutorial and some other nice stuff to getting started.
+Will see if I eventually come around lerning Haskell at least it sounds interesting.</p>
+
+<p>-<a href="http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/">A simple yesod tutorial. Yesod is an Haskell web framework. You shouldn’t need to know Haskell.</a>
+-<a href="http://blog.ezyang.com/2011/11/how-to-read-haskell/">How to read Haskell like Python</a>
+-<a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good!</a></p>
+]]></content>
+  </entry>
+  
+</feed>

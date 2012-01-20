@@ -4,7 +4,7 @@
   <title><![CDATA[meh...]]></title>
   <link href="http://sch1zo.github.com/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-01-19T19:07:03+01:00</updated>
+  <updated>2012-01-20T15:18:13+01:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -12,6 +12,20 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Haskell]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/20/haskell/"/>
+    <updated>2012-01-20T14:44:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/20/haskell</id>
+    <content type="html"><![CDATA[<p>Cause I keep looking around for another interesting language to learn I found this nice Haskell quickstart tutorial and some other nice stuff to getting started.
+Will see if I eventually come around lerning Haskell at least it sounds interesting.</p>
+
+<p>-<a href="http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/">A simple yesod tutorial. Yesod is an Haskell web framework. You shouldn’t need to know Haskell.</a>
+-<a href="http://blog.ezyang.com/2011/11/how-to-read-haskell/">How to read Haskell like Python</a>
+-<a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good!</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How Ruby's throw works and whats awesome about Sinatra's halt]]></title>
@@ -901,40 +915,6 @@ and controls to make do the work.</p>
 <p>But lacking a device with WP7 I don&#8217;t think i will do much at the moment,
 perhaps later this year with the Mango SDK. Also I will have a look at the new
 devices in fall.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[damn is ruby slow - at least compared to c++]]></title>
-    <link href="http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c/"/>
-    <updated>2011-04-16T00:00:00+02:00</updated>
-    <id>http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow&#8212;at-least-compared-to-c</id>
-    <content type="html"><![CDATA[<p>ok thats nothing new, yet the difference was a little bit surprising.</p>
-
-<p>In an earlier post I described the <em>puzzleSolver</em> project and before starting
-to implement parts of it in c++ I build a Ruby prototype. The prototype
-generated 1000 random puzzle pieces and later generated a quality between
-every 4000 puzzle edges, thats about 8.000.000 calculations. The Ruby
-Prototype needs <strong>3 minutes</strong> to finish that calculation.</p>
-
-<!-- more -->
-
-
-<p>The c++ version does exactly the same, it has the same structure and
-algorithm. Now the calculations are done in <strong>under 1 second</strong> for 1000
-pieces.</p>
-
-<p>As I sad, its not surprising that the c++ version is way faster than the Ruby
-prototype. But a difference of <strong>200 times faster</strong> was surprising.</p>
-
-<p>But I don&#8217;t want to make Ruby bad, I love Ruby, without the prototype it would
-have been way more difficult to build the c++ version. And of cause the time
-building the two versions where different, the Ruby prototype was working
-within a few hours, plus another few to optimize the algorithm. The c++
-version toke a few days till it was working like the prototype, but that might
-also had to do that my last c++ encounter was like two years ago. But even so
-I just had to re implement the existing algorithm. Without that it would have
-taken even longer.</p>
 ]]></content>
   </entry>
   
