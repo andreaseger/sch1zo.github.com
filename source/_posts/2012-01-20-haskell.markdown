@@ -1,0 +1,14 @@
+---
+layout: post
+title: "Haskell"
+date: 2012-01-20 14:44
+comments: true
+categories: 
+- Haskell
+---
+Cause I keep looking around for another interesting language to learn I found this nice Haskell quickstart tutorial and some other nice stuff to getting started.
+Will see if I eventually come around lerning Haskell at least it sounds interesting.
+
+- [A simple yesod tutorial. Yesod is an Haskell web framework. You shouldn’t need to know Haskell.](http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/)
+- [How to read Haskell like Python](http://blog.ezyang.com/2011/11/how-to-read-haskell/)
+- [Learn You a Haskell for Great Good!](http://learnyouahaskell.com/chapters)
