@@ -2,6 +2,9 @@
   {% if site.twitter_tweet_button %}
   <a href="http://twitter.com/share" class="twitter-share-button" data-url="{{ site.url }}{{ page.url }}" data-via="{{ site.twitter_user }}" data-counturl="{{ site.url }}{{ page.url }}" >Tweet</a>
   {% endif %}
+  {% if site.flattr_button %}
+  <a class="FlattrButton" style="display:none;" title="{{ page.title }}" href="{{ site.url }}{{ page.url }}" data-flattr-button="compact" data-flattr-tags="{% for c in page.categories %}{{c}},{% endfor %}">Flattr</a>
+  {% endif %}
   {% if site.google_plus_one %}
   <div class="g-plusone" data-size="{{ site.google_plus_one_size }}"></div>
   {% endif %}
