@@ -9,7 +9,8 @@
   <meta name="author" content="Andreas Eger">
 
   
-  <meta name="description" content="Cause I keep looking around for another interesting language to learn I found this nice Haskell quickstart tutorial and some other nice stuff to &hellip;">
+  <meta name="description" content="So after managing to render my data on the client - see my last post about mustache - I wanted to get the
+browser histoy working again. The problem &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +83,184 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/">JS Playground 2: AJAX and the Browserhistoy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-30T22:26:00+01:00" pubdate data-updated="true">Jan 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So after managing to render my data on the client - see my last post about mustache - I wanted to get the
+browser histoy working again. The problem with single site pages and getting all the data via ajax is that
+normally the browserhistory is useless. Also you can&#8217;t bookmark stuff or send others a link to exacly the
+site you are seeing.</p>
+
+<p>With HTML5 there is now a clean way of doing exaclty this task. With the Histoy API, nicely explained
+<a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history">here</a> from mozilla, you can now
+add new items to the browser history. This works more or less like a stack, if you want to add something
+just push a new state to it. If the user then clicks back the last element gets poped from the stack. The
+API also allows you to save some data in each state - besides the URI itself. In addition you can walk
+through the history in javascript, but I didn&#8217;t play with this.</p>
+
+<p>Fortunatly I don&#8217;t care for old browsers, so I could just use this as all(?) modern Browsers support the Histroy API.
+But as with most of these features every browser does it a little bit different. I normally test apps in Opera, because
+thats my main browser, and I got the history woring pretty fast. So I thought lets see what Chrome does with this and of
+couse it didn&#8217;t work. I&#8217;m not sure if i used the API in a wrong way or if Chrome or Opera does something special here.
+Point is even after fiddling around for a bit it didn&#8217;t work in both browsers at the same time.</p>
+
+<p>I think it should look somethink like this, but sometimes the popstate event is not the one you would want and you have to use the originalEvent and sometimes not.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;popstate&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">().</span><span class="nx">state</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So whats the solution for that kind of problem? Just ask the internet if anybody has written a nice wrapper for this
+which takes care about the different browsers. And suprise, suprise I found <a href="https://github.com/balupton/History.js/">history.js</a></p>
+
+<p>Because I already knew how and when to add new states and how to act on a &#8216;back&#8217; event, the change to history.js was
+pretty easy. Just had to change some keywords. And it almost immedialety work in all browsers I tested it (opera, chrome, firefox)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span><span class="s1">&#39;statechange&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">History</span><span class="p">.</span><span class="nx">getState</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Besides not having to care about browser differences the libary also supports a fallback mode for non HTML5 browsers,
+which is nice if you care about such stuff.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS Playground 1: Mustache and ICanHaz.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T16:53:00+01:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the last few days I started to play around with javascript and other front-end related stuff.</p>
+
+<p>The first thing I wanted to try and use was <a href="http://mustache.github.com/">mustache</a>.
+So first I needed a backendt to serve the templates and the dynamic data. Of course I used Ruby
+and Sinatra for this. For the views the server had to render I also used Mustache - that&#8217;s the nice
+thing about Mustache you can use it everywhere.</p>
+
+<p>Mustache as it is is really nice, after you understood how it will use partials and how it goes through
+the data you get in my optinion much nicher source template als in someting like erb. Also you don&#8217;t
+depend on some magic like when using haml or slim. And of course the split between data and template
+really helps to structure your code.</p>
+
+<p>So now to the interesting part the client side. After a few very simple tests on how to use mustache.js
+I accounted the problem on how to get the templates to the client without having to write them directly
+into the javascript file.
+I looked around and discoverd <a href="http://icanhazjs.com/">ICanHaz.js</a>, which is a nice wrapper around
+mustache and tries to solve the template issue.
+There are two ways to register a template for ICanHaz, the first one is to write them into the html like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;group&quot;</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c1">//the template</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But to use this you have to write all your templates into the html source, which I didn&#8217;t liked.</p>
+
+<p>The other way is to get the templates via JS as JSON from the server and just add them to ICanHaz:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;/myserver/templates.json&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">templates</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">templates</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">ich</span><span class="p">.</span><span class="nx">addTemplate</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">template</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thats really clean and your have your templates seperate from the rest of the javascript and html.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -477,101 +656,6 @@ localhost:1234)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Using My Ec2 Instance to Get a US IP</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-12T00:00:00+02:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today I was surfing around and once again I got that ugly GEMA message on a
-youtube music video which prevented me from watching it. In the last months
-more and more videos got blocked this way and makes having a german IP a pain.</p>
-
-<p>But than I remembered that I can set up a Micro Instance in one of the US
-datacentrers and route my web traffic through it.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Messing Around With the Amazon Cloud Part 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-15T00:00:00+02:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>after getting the EC2 Instance up and running its time to install a basic
-development environment.</p>
-
-<ul>
-<li>zsh and screen makes as expected no problems.</li>
-<li>vim is unfortunately not compiled with ruby and I couldn&#8217;t find another one in the repository so it has to work without it</li>
-<li>rvm again no problem. As I&#8217;m writing this post ruby 1.9.2 is compiling, which given the power of a micro instance is slow perhaps to slow to do anything with it, but time will see.</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -587,6 +671,14 @@ development environment.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/">JS playground 2: AJAX and the Browserhistoy</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS playground 1: mustache and ICanHaz.js</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/01/20/haskell/">Haskell</a>
       </li>
     
@@ -596,14 +688,6 @@ development environment.</p>
     
       <li class="post">
         <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">compiling ruby 1.8.7 with gcc 4.6.*</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">how to compile a fast imagemagick</a>
       </li>
     
   </ul>

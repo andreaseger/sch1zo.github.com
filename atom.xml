@@ -4,7 +4,7 @@
   <title><![CDATA[meh...]]></title>
   <link href="http://sch1zo.github.com/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-01-24T12:53:21+01:00</updated>
+  <updated>2012-01-30T23:05:20+01:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[JS playground 2: AJAX and the Browserhistoy]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/"/>
+    <updated>2012-01-30T22:26:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy</id>
+    <content type="html"><![CDATA[<p>So after managing to render my data on the client - see my last post about mustache - I wanted to get the
+browser histoy working again. The problem with single site pages and getting all the data via ajax is that
+normally the browserhistory is useless. Also you can&#8217;t bookmark stuff or send others a link to exacly the
+site you are seeing.</p>
+
+<p>With HTML5 there is now a clean way of doing exaclty this task. With the Histoy API, nicely explained
+<a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history">here</a> from mozilla, you can now
+add new items to the browser history. This works more or less like a stack, if you want to add something
+just push a new state to it. If the user then clicks back the last element gets poped from the stack. The
+API also allows you to save some data in each state - besides the URI itself. In addition you can walk
+through the history in javascript, but I didn&#8217;t play with this.</p>
+
+<p>Fortunatly I don&#8217;t care for old browsers, so I could just use this as all(?) modern Browsers support the Histroy API.
+But as with most of these features every browser does it a little bit different. I normally test apps in Opera, because
+thats my main browser, and I got the history woring pretty fast. So I thought lets see what Chrome does with this and of
+couse it didn&#8217;t work. I&#8217;m not sure if i used the API in a wrong way or if Chrome or Opera does something special here.
+Point is even after fiddling around for a bit it didn&#8217;t work in both browsers at the same time.</p>
+
+<p>I think it should look somethink like this, but sometimes the popstate event is not the one you would want and you have to use the originalEvent and sometimes not.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;popstate&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">().</span><span class="nx">state</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So whats the solution for that kind of problem? Just ask the internet if anybody has written a nice wrapper for this
+which takes care about the different browsers. And suprise, suprise I found <a href="https://github.com/balupton/History.js/">history.js</a></p>
+
+<p>Because I already knew how and when to add new states and how to act on a &#8216;back&#8217; event, the change to history.js was
+pretty easy. Just had to change some keywords. And it almost immedialety work in all browsers I tested it (opera, chrome, firefox)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span><span class="s1">&#39;statechange&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">History</span><span class="p">.</span><span class="nx">getState</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Besides not having to care about browser differences the libary also supports a fallback mode for non HTML5 browsers,
+which is nice if you care about such stuff.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JS playground 1: mustache and ICanHaz.js]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/"/>
+    <updated>2012-01-29T16:53:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js</id>
+    <content type="html"><![CDATA[<p>Over the last few days I started to play around with javascript and other front-end related stuff.</p>
+
+<p>The first thing I wanted to try and use was <a href="http://mustache.github.com/">mustache</a>.
+So first I needed a backendt to serve the templates and the dynamic data. Of course I used Ruby
+and Sinatra for this. For the views the server had to render I also used Mustache - that&#8217;s the nice
+thing about Mustache you can use it everywhere.</p>
+
+<p>Mustache as it is is really nice, after you understood how it will use partials and how it goes through
+the data you get in my optinion much nicher source template als in someting like erb. Also you don&#8217;t
+depend on some magic like when using haml or slim. And of course the split between data and template
+really helps to structure your code.</p>
+
+<p>So now to the interesting part the client side. After a few very simple tests on how to use mustache.js
+I accounted the problem on how to get the templates to the client without having to write them directly
+into the javascript file.
+I looked around and discoverd <a href="http://icanhazjs.com/">ICanHaz.js</a>, which is a nice wrapper around
+mustache and tries to solve the template issue.
+There are two ways to register a template for ICanHaz, the first one is to write them into the html like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;group&quot;</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c1">//the template</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But to use this you have to write all your templates into the html source, which I didn&#8217;t liked.</p>
+
+<p>The other way is to get the templates via JS as JSON from the server and just add them to ICanHaz:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;/myserver/templates.json&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">templates</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">templates</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">ich</span><span class="p">.</span><span class="nx">addTemplate</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">template</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thats really clean and your have your templates seperate from the rest of the javascript and html.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Haskell]]></title>
@@ -870,54 +994,6 @@ speak RSpec</p>
 <p>this task will simply run all <strong>_spec.rb</strong> files within your <strong>spec</strong> folder</p>
 
 <p><a href="http://duckpunching.com/rspec-2-0-rake-tasks">Source</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[That's what she said: teaching AI the proper respond to, 'I was trying all night, but I just could not get it in!']]></title>
-    <link href="http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in/"/>
-    <updated>2011-05-01T00:00:00+02:00</updated>
-    <id>http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in</id>
-    <content type="html"><![CDATA[<p><a href="http://www.newscientist.com/blogs/onepercent/2011/04/software-works-out-%0Awhether-tha.html">Thats what she said: teaching AI the proper respond to, I was trying all
-night, but I just could not get it
-in!</a></p>
-
-<p><a href="http://ohnoros.co/post/5050746093">ohnorosco</a>:</p>
-
-<blockquote><p>The best academic paper you’ll read all year. From two University of
-Washington Computer Scientists.
-(<a href="http://www.cs.washington.edu/homes/brun/pubs/pubs/Kiddon11.pdf">PDF</a>)</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[it's kinda nice to develop for Windows Phone 7]]></title>
-    <link href="http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7/"/>
-    <updated>2011-04-17T00:00:00+02:00</updated>
-    <id>http://sch1zo.github.com/blog/2011/04/17/its-kinda-nice-to-develop-for-windows-phone-7</id>
-    <content type="html"><![CDATA[<p>cause I had nothing better to do and <a href="http://live.visitmix.com/">MIX11</a> just
-ended, I tried to build a little app for WP7. nothing new just a local app
-which does the same as my sinatra app <a href="http://hm.eger-andreas.de">News Filter</a>
-for the bulletin board at Hochschule München
-(<a href="https://github.com/sch1zo/hm-news-filter">source</a>)</p>
-
-<!-- more -->
-
-
-<p>So, first a word or two the the language C# and Silverlight. It wasn&#8217;t the
-first time for me to use C# but it was almost a year ago since my last use,
-but C# is not so different to Java so it was no problem to get into it again.
-Silverlight on the other hand was new to me and I had to search a little bit
-to find the right methods to use, but also no problem.</p>
-
-<p>The development tools are awesome, Visual Studio 2010, great emulator and nice
-application templates which let you start right into the app without having to
-build all basic controls. So my only problem was to find the right libraries
-and controls to make do the work.</p>
-
-<p>But lacking a device with WP7 I don&#8217;t think i will do much at the moment,
-perhaps later this year with the Mango SDK. Also I will have a look at the new
-devices in fall.</p>
 ]]></content>
   </entry>
   

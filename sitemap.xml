@@ -107,12 +107,24 @@
         <lastmod>2012-01-20T15:19:38+01:00</lastmod>
     </url>
     <url>
+        <loc>
+            http://sch1zo.github.com/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/
+        </loc>
+        <lastmod>2012-01-30T22:27:51+01:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/
+        </loc>
+        <lastmod>2012-01-30T23:04:44+01:00</lastmod>
+    </url>
+    <url>
         <loc>http://sch1zo.github.com/</loc>
-        <lastmod>2012-01-20T15:19:38+01:00</lastmod>
+        <lastmod>2012-01-30T23:04:44+01:00</lastmod>
     </url>
     <url>
         <loc>http://sch1zo.github.com/blog/archives/</loc>
-        <lastmod>2012-01-20T15:19:38+01:00</lastmod>
+        <lastmod>2012-01-30T23:04:44+01:00</lastmod>
     </url>
     <url>
         <loc>http://sch1zo.github.com/about/</loc>
