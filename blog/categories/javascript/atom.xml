@@ -4,7 +4,7 @@
   <title><![CDATA[Category: javascript | meh...]]></title>
   <link href="http://sch1zo.github.com/blog/categories/javascript/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-02-08T12:25:01+01:00</updated>
+  <updated>2012-02-08T12:31:52+01:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[JS playground 2: AJAX and the Browserhistoy]]></title>
-    <link href="http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/"/>
+    <title type="html"><![CDATA[JS playground 2: AJAX and the Browserhistory]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/"/>
     <updated>2012-01-30T22:26:00+01:00</updated>
-    <id>http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy</id>
+    <id>http://sch1zo.github.com/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory</id>
     <content type="html"><![CDATA[<p>So after managing to render my data on the client - see my last post about mustache - I wanted to get the
 browser histoy working again. The problem with single site pages and getting all the data via ajax is that
 normally the browserhistory is useless. Also you can't bookmark stuff or send others a link to exacly the
