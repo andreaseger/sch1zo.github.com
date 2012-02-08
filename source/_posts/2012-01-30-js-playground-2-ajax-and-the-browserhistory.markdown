@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "JS playground 2: AJAX and the Browserhistoy"
+title: "JS playground 2: AJAX and the Browserhistory"
 date: 2012-01-30 22:26
 comments: true
 categories: 
