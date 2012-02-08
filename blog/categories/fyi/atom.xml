@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: fyi | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/fyi/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:25:01+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FYI: dynamically define methods in ruby]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/"/>
+    <updated>2012-02-08T12:17:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby</id>
+    <content type="html"><![CDATA[<p>to create a method dynamically do something like this:</p>
+
+<p>``` ruby
+[:teacher, :group, :course, :room].each do |arg|
+  method_name = ("find_by_" + arg.to_s).to_sym
+  define_method(method_name) do |params|</p>
+
+<pre><code># to stuff here
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>if the methods should be class methods modifier it like this</p>
+
+<p>``` ruby
+class &lt;&lt; self
+  [:teacher, :group, :course, :room].each do |arg|</p>
+
+<pre><code>method_name = ("find_by_" + arg.to_s).to_sym
+define_method(method_name) do |params|
+  # to stuff here
+end
+</code></pre>
+
+<p>  end
+end
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

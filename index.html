@@ -9,8 +9,13 @@
   <meta name="author" content="Andreas Eger">
 
   
-  <meta name="description" content="So after managing to render my data on the client - see my last post about mustache - I wanted to get the
-browser histoy working again. The problem &hellip;">
+  <meta name="description" content="to create a method dynamically do something like this: 1
+2
+3
+4
+5
+6
+[:teacher, :group, :course, :room].each do |arg| method_name = (&quot;find_by_& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +88,78 @@ browser histoy working again. The problem &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: Dynamically Define Methods in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-08T12:17:00+01:00" pubdate data-updated="true">Feb 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>to create a method dynamically do something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="ss">:teacher</span><span class="p">,</span> <span class="ss">:group</span><span class="p">,</span> <span class="ss">:course</span><span class="p">,</span> <span class="ss">:room</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">method_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;find_by_&quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span><span class="o">.</span><span class="n">to_sym</span>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">params</span><span class="o">|</span>
+</span><span class='line'>    <span class="c1"># to stuff here</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>if the methods should be class methods modifier it like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>  <span class="o">[</span><span class="ss">:teacher</span><span class="p">,</span> <span class="ss">:group</span><span class="p">,</span> <span class="ss">:course</span><span class="p">,</span> <span class="ss">:room</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">method_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;find_by_&quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span><span class="o">.</span><span class="n">to_sym</span>
+</span><span class='line'>    <span class="n">define_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">params</span><span class="o">|</span>
+</span><span class='line'>      <span class="c1"># to stuff here</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -610,52 +687,6 @@ some specific sites.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">HOWTO: Configuring a Local SOCKS Proxy in Your Browser</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-08-14T00:00:00+02:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>as a follow up on my last post I thought I describe how to setup a local proxy
-for a ssh tunnel in the most common browsers</p>
-
-<p>To use the tunnel you will have to configure the browsers to use a SOCKS
-proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
-localhost:1234)</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -671,6 +702,10 @@ localhost:1234)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: dynamically define methods in ruby</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistoy/">JS playground 2: AJAX and the Browserhistoy</a>
       </li>
     
@@ -684,10 +719,6 @@ localhost:1234)</p>
     
       <li class="post">
         <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s throw works and whats awesome about Sinatra&#8217;s halt</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the win</a>
       </li>
     
   </ul>
