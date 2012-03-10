@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ree | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/ree/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[compiling ruby 1.8.7 with gcc 4.6.*]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46/"/>
+    <updated>2011-09-09T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46</id>
+    <content type="html"><![CDATA[<p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can't compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+<!-- more -->
+
+
+<p>After some googling I just grabbed the source from github and compiled it
+myself without relying on the default installer.</p>
+
+<p>You will get 2 errors but they basically the same. While building ruby at some
+point two files get generated <code>callback.func</code> and <code>cbtables.func</code>.
+Unfortunately later on exactly these two files are wrong…</p>
+
+<p>The - when you know what to do - easy solution is the following</p>
+
+<p>``` sh
+cd ext/dl
+rm callback.func cbtables.func
+touch callback.func cbtables.func</p>
+
+<p>ruby mkcallback.rb >> callback.func
+ruby mkcbtables.rb >> cbtables.func
+```</p>
+
+<p>After this go back to the root source folder and run <code>make</code> again. Make will
+start at the position of the last error, use the new files and finish
+building.</p>
+]]></content>
+  </entry>
+  
+</feed>

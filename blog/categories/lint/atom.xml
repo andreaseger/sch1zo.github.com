@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: lint | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/lint/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveModel Lint Test for RSpec]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec/"/>
+    <updated>2011-06-23T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec</id>
+    <content type="html"><![CDATA[<p><a href="http://library.edgecase.com/Rails/2010/10/30%0A/activemodel-lint-test-for-rspec.html">ActiveModel Lint Test for RSpec</a></p>
+]]></content>
+  </entry>
+  
+</feed>

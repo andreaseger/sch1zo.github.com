@@ -1,0 +1,318 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: tumblr | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/tumblr/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[compiling ruby 1.8.7 with gcc 4.6.*]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46/"/>
+    <updated>2011-09-09T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/09/compiling-ruby-187-with-gcc-46</id>
+    <content type="html"><![CDATA[<p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can't compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+<!-- more -->
+
+
+<p>After some googling I just grabbed the source from github and compiled it
+myself without relying on the default installer.</p>
+
+<p>You will get 2 errors but they basically the same. While building ruby at some
+point two files get generated <code>callback.func</code> and <code>cbtables.func</code>.
+Unfortunately later on exactly these two files are wrong…</p>
+
+<p>The - when you know what to do - easy solution is the following</p>
+
+<p>``` sh
+cd ext/dl
+rm callback.func cbtables.func
+touch callback.func cbtables.func</p>
+
+<p>ruby mkcallback.rb >> callback.func
+ruby mkcbtables.rb >> cbtables.func
+```</p>
+
+<p>After this go back to the root source folder and run <code>make</code> again. Make will
+start at the position of the last error, use the new files and finish
+building.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[how to compile a fast imagemagick]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick/"/>
+    <updated>2011-09-06T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick</id>
+    <content type="html"><![CDATA[<p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
+some image processing on a new webapp I'm building - creating thumbnails of
+uploaded images to be precise.</p>
+
+<p>The initial choice was to simply use the the package from the repository. But
+it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
+wallpaper which I used to test it( time sad a little above 7 seconds).</p>
+
+<!-- more -->
+
+
+<p>So the logical next step was to get the source and compile ImageMagick by
+hand. But I didn't stopped there. After a quick search I found some tips to
+get it even faster:</p>
+
+<ul>
+<li>first lets mess around with the compiler optimization I found <a href="http://wikis.sun.com/display/AppPerfTuning/ImageMagick">here</a> but I did not change the CC CXX or CFLAGS instead I only modified CXXFLAGS</li>
+</ul>
+
+
+<p>export CXXFLAGS = "-g0 -fast -zlazyload"</p>
+
+<ul>
+<li>make it use only about half the memory configure with with-quantum-depth=8 instead of the default 16</li>
+</ul>
+
+
+<p>./configure --with-quantum-depth=8</p>
+
+<p>If this gives you a snappy imagemagick your fine, but on my ubuntu server a
+simple resize still took 7 seconds.</p>
+
+<p>So I did a little bit more searching and found out that a buggy OpenMP can
+cause this issue and disabling it while compiling fixes the slowness.</p>
+
+<p><strong>Finally here my complete configure line</strong></p>
+
+<p><code>sh
+./configure CXX="g++" CXXFLAGS="-g0 -fast -zlazyload" --with-quantum-depth=8 --disable-openmp
+</code></p>
+
+<hr />
+
+<p>I know this post is a mess, but I dont care</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: establishing a SSH tunnel and use it as SOCKS proxy]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/"/>
+    <updated>2011-08-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy</id>
+    <content type="html"><![CDATA[<p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+<!-- more -->
+
+
+<h2>Putty</h2>
+
+<p>I'd like to think that you already have a session which connects to your
+server via ssh. Load this session and go in the menu to the item
+<strong>Connection</strong> -> <strong>SSH</strong> -> <strong>Tunnels</strong>.</p>
+
+<p>Enter the portnumber of your choice into the field <strong>Source Port</strong> for example
+1234.</p>
+
+<p>Than select <em>Dynamic</em> and <em>Auto</em> and click <strong>Add</strong>. You will now see <strong>D1234</strong>
+in the list above.</p>
+
+<p>You can now go back the the sessions screen, save your changes and open the
+connection.</p>
+
+<h2>unix</h2>
+
+<p>for unix it is quite simple</p>
+
+<pre><code>ssh -ND 1234 user@server.com
+</code></pre>
+
+<p>This will open a SOCKS proxy on port 1234 to the server. <strong>-N</strong> Tells prevents
+the console from executing any remote command. This way it will just open the
+tunnel and than sits there and waits for you to close it (with CTRL+C) later.
+With an additional <strong>-f</strong> it is also possible to completely background the
+process, but than its not as easy for you to close the tunnel later.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: use a proxy on a per-site basis]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/"/>
+    <updated>2011-08-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis</id>
+    <content type="html"><![CDATA[<p>in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites.</p>
+
+<p>For example you only want to use the proxy if you got to "hulu.com" and
+"pandora.com".</p>
+
+<!-- more -->
+
+
+<p><em>I assume you at the moment you have setup the proxy as described in my last
+post</em></p>
+
+<p>The in my opinion most obvious solution is to use a <a href="http://en.wikipedia.org/wiki/Proxy_auto-config">Proxy auto-
+config</a>-file. Unfortunately
+this will not work in all browsers.</p>
+
+<p>First lets take a look at the <strong>proxy.pac</strong> file:</p>
+
+<p>```
+function FindProxyForURL(url, host)
+{
+  // Use Proxy?
+  if (dnsDomainIs(host, ".hulu.com") || dnsDomainIs(host, ".pandora.com")){</p>
+
+<pre><code>return "SOCKS 127.0.0.1:1234";
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return "DIRECT";
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>It returns the SOCKS address if its hulu or pandora otherwise it goes directly
+to the site. Save that file somewhere local or on a webserver.</p>
+
+<p>Setting up the Browsers:</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>"Automatic proxy configuration URL:"</strong></li>
+<li>enter a url or filepath to your proxy.pac</li>
+</ol>
+
+
+<h2>Opera</h2>
+
+<p>Opera also is able to use pac files, but due to it lack of SOCKS proxy support
+for a long time(Only got it with version 11) it does not support SOCKS proxies
+within a pac file. But there is a nice workaround.</p>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Proxy Servers</strong></li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in "127.0.0.1" and "1234" in the field next to SOCKS, keep the other fields empty (this is exactly how to set it up permanently)</li>
+<li>click <strong>Exception List</strong></li>
+<li>choose <strong>Only use proxy for servers on the list</strong></li>
+<li>finally add pandora.com and hulu.com to that list.</li>
+</ol>
+
+
+<p>So instead of using the auto-config file you can use a whitelist. It can also
+be used the other way around as blacklist.</p>
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<p>There is an option within the system LAN Settings to use a automatic
+configuration script, but all three browsers completely ignore that script.
+They should be able to configure a SOCKS Proxy via a pac file but it didn't
+work for me. I also didn't find another way to do a per-site proxy
+configuration.</p>
+
+<p><em>Update:</em> I had a look at the proxy settings in Chrome with Ubuntu running
+gnome-shell. There is also a option to use a pac file but again the above
+settings will just be ignored.</p>
+
+<p><em>Update 2:</em> it seems this does not work anymore with hulu</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[HOWTO: configuring a local SOCKS Proxy in your browser]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/"/>
+    <updated>2011-08-14T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser</id>
+    <content type="html"><![CDATA[<p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+<!-- more -->
+
+
+<h2>Opera</h2>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> **Proxy Servers</li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in "127.0.0.1" and "1234" in the field next to SOCKS, keep the other fields empty</li>
+</ol>
+
+
+<p>Opera doesn't use the proxy settings for local addresses on default.</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>Manual proxy configuration</strong></li>
+<li>enter "127.0.0.1" into SOCKS Host</li>
+<li>enter "1234" into the Port field next to the SOCKS host</li>
+<li>choose <strong>SOCKS v5</strong></li>
+<li>enter "localhost, *.local" into the field next to "No Proxy for:"</li>
+</ol>
+
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<ol>
+<li>tool-icon -> <strong>Options</strong> -> <strong>Under the Hood</strong> -> <strong>Change proxy settings…</strong>(Chrome)<br/>
+gear-icon -> <strong>Preferences</strong> -> <strong>Advanced</strong> -> Proxies: <strong>Change Settings…</strong>
+(Safari)</li>
+</ol>
+
+
+<p>gear-icon -> <strong>Internet Options</strong> -> <strong>Connections</strong> (IE9)</p>
+
+<ol>
+<li><strong>LAN Settings</strong></li>
+<li>check <strong>Use a proxy for your LAN(…)</strong></li>
+<li>click <strong>Advanced</strong></li>
+<li>uncheck <strong>Use the same proxy server for all protocols</strong></li>
+<li>check <strong>bypass proxy server for local addresses</strong></li>
+<li>fill in "127.0.0.1" and "1234" in the field next to Socks, keep the other fields empty</li>
+</ol>
+
+
+<p>These three browsers basically use the system proxy configuration. So with
+this setup all other software which also uses these settings will also use the
+proxy.</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+]]></content>
+  </entry>
+  
+</feed>

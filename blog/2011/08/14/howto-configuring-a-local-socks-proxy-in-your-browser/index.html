@@ -1,0 +1,354 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HOWTO: configuring a local SOCKS Proxy in your browser - meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers To use the tunnel you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  (function() {
+   var s = document.createElement('script');
+   var t = document.getElementsByTagName('script')[0];
+
+   s.type = 'text/javascript';
+   s.async = true;
+   s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto&uid=sch1zo&category=text';
+
+   t.parentNode.insertBefore(s, t);
+   })();
+  /* ]]> */
+  </script>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">HOWTO: Configuring a Local SOCKS Proxy in Your Browser</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+02:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+<!-- more -->
+
+
+<h2>Opera</h2>
+
+<ol>
+<li><strong>Settings</strong> -> <strong>Preferences</strong> (or simply CTRL+F12)</li>
+<li><strong>Advanced</strong> -> <strong>Network</strong> -> **Proxy Servers</li>
+<li>check <strong>SOCKS</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to SOCKS, keep the other fields empty</li>
+</ol>
+
+
+<p>Opera doesn&#8217;t use the proxy settings for local addresses on default.</p>
+
+<h2>Firefox</h2>
+
+<ol>
+<li><strong>Options</strong> -> <strong>Advanced</strong> -> <strong>Network</strong> -> <strong>Settings…</strong></li>
+<li>choose <strong>Manual proxy configuration</strong></li>
+<li>enter &#8220;127.0.0.1&#8221; into SOCKS Host</li>
+<li>enter &#8220;1234&#8221; into the Port field next to the SOCKS host</li>
+<li>choose <strong>SOCKS v5</strong></li>
+<li>enter &#8220;localhost, *.local&#8221; into the field next to &#8220;No Proxy for:&#8221;</li>
+</ol>
+
+
+<h2>Chrome, Safari and IE9 (windows)</h2>
+
+<ol>
+<li>tool-icon -> <strong>Options</strong> -> <strong>Under the Hood</strong> -> <strong>Change proxy settings…</strong>(Chrome)<br/>
+gear-icon -> <strong>Preferences</strong> -> <strong>Advanced</strong> -> Proxies: <strong>Change Settings…</strong>
+(Safari)</li>
+</ol>
+
+
+<p>gear-icon -> <strong>Internet Options</strong> -> <strong>Connections</strong> (IE9)</p>
+
+<ol>
+<li><strong>LAN Settings</strong></li>
+<li>check <strong>Use a proxy for your LAN(…)</strong></li>
+<li>click <strong>Advanced</strong></li>
+<li>uncheck <strong>Use the same proxy server for all protocols</strong></li>
+<li>check <strong>bypass proxy server for local addresses</strong></li>
+<li>fill in &#8220;127.0.0.1&#8221; and &#8220;1234&#8221; in the field next to Socks, keep the other fields empty</li>
+</ol>
+
+
+<p>These three browsers basically use the system proxy configuration. So with
+this setup all other software which also uses these settings will also use the
+proxy.</p>
+
+<p><em>All the above is done with the latest versions of the browsers at the moment
+so consider this if you use another version.(Opera 12.00 pre-alpha 1024 |
+Chrome 15.0.849.0 canary | Firefox Aurora 7.0a2 (2011-08-14) | Safari 5.1
+7534.50)</em></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andreas Eger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+02:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ie9/'>IE9</a>, <a class='category' href='/blog/categories/browser/'>browser</a>, <a class='category' href='/blog/categories/firefox/'>firefox</a>, <a class='category' href='/blog/categories/opera/'>opera</a>, <a class='category' href='/blog/categories/proxy/'>proxy</a>, <a class='category' href='/blog/categories/safari/'>safari</a>, <a class='category' href='/blog/categories/socks/'>socks</a>, <a class='category' href='/blog/categories/tumblr/'>tumblr</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/" data-via="sch1zo" data-counturl="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/" >Tweet</a>
+  
+  
+  <a class="FlattrButton" style="display:none;" title="HOWTO: configuring a local SOCKS Proxy in your browser" href="http://sch1zo.github.com/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/" data-flattr-button="compact" data-flattr-tags="IE9,browser,firefox,opera,proxy,safari,socks,tumblr,">Flattr</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/" title="Previous Post: using my ec2 instance to get a US IP">&laquo; using my ec2 instance to get a US IP</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/" title="next Post: HOWTO: use a proxy on a per-site basis">HOWTO: use a proxy on a per-site basis &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: dynamically define methods in ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/">JS playground 2: AJAX and the Browserhistory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS playground 1: mustache and ICanHaz.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/haskell/">Haskell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby's throw works and whats awesome about Sinatra's halt</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Flattr</h1>
+  <a class="FlattrButton" style="display:none;" title="meh..." href="http://sch1zo.github.com" data-flattr-tags="text, hacking, ruby, opensource">Flattr me</a>
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

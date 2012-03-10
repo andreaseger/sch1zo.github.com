@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="to create a method dynamically do something like this: 1
+2
+3
+4
+5
+6
+[:teacher, :group, :course, :room].each do |arg| method_name = (&quot;find_by_& &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  (function() {
+   var s = document.createElement('script');
+   var t = document.getElementsByTagName('script')[0];
+
+   s.type = 'text/javascript';
+   s.async = true;
+   s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto&uid=sch1zo&category=text';
+
+   t.parentNode.insertBefore(s, t);
+   })();
+  /* ]]> */
+  </script>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: Dynamically Define Methods in Ruby</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-02-08T12:17:00+01:00" pubdate data-updated="true">Feb 8<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>to create a method dynamically do something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">[</span><span class="ss">:teacher</span><span class="p">,</span> <span class="ss">:group</span><span class="p">,</span> <span class="ss">:course</span><span class="p">,</span> <span class="ss">:room</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">method_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;find_by_&quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span><span class="o">.</span><span class="n">to_sym</span>
+</span><span class='line'>  <span class="n">define_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">params</span><span class="o">|</span>
+</span><span class='line'>    <span class="c1"># to stuff here</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>if the methods should be class methods modifier it like this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="o">&lt;&lt;</span> <span class="nb">self</span>
+</span><span class='line'>  <span class="o">[</span><span class="ss">:teacher</span><span class="p">,</span> <span class="ss">:group</span><span class="p">,</span> <span class="ss">:course</span><span class="p">,</span> <span class="ss">:room</span><span class="o">].</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">arg</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">method_name</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;find_by_&quot;</span> <span class="o">+</span> <span class="n">arg</span><span class="o">.</span><span class="n">to_s</span><span class="p">)</span><span class="o">.</span><span class="n">to_sym</span>
+</span><span class='line'>    <span class="n">define_method</span><span class="p">(</span><span class="n">method_name</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">params</span><span class="o">|</span>
+</span><span class='line'>      <span class="c1"># to stuff here</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/">JS Playground 2: AJAX and the Browserhistory</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-30T22:26:00+01:00" pubdate data-updated="true">Jan 30<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>So after managing to render my data on the client - see my last post about mustache - I wanted to get the
+browser histoy working again. The problem with single site pages and getting all the data via ajax is that
+normally the browserhistory is useless. Also you can&#8217;t bookmark stuff or send others a link to exacly the
+site you are seeing.</p>
+
+<p>With HTML5 there is now a clean way of doing exaclty this task. With the Histoy API, nicely explained
+<a href="https://developer.mozilla.org/en/DOM/Manipulating_the_browser_history">here</a> from mozilla, you can now
+add new items to the browser history. This works more or less like a stack, if you want to add something
+just push a new state to it. If the user then clicks back the last element gets poped from the stack. The
+API also allows you to save some data in each state - besides the URI itself. In addition you can walk
+through the history in javascript, but I didn&#8217;t play with this.</p>
+
+<p>Fortunatly I don&#8217;t care for old browsers, so I could just use this as all(?) modern Browsers support the Histroy API.
+But as with most of these features every browser does it a little bit different. I normally test apps in Opera, because
+thats my main browser, and I got the history woring pretty fast. So I thought lets see what Chrome does with this and of
+couse it didn&#8217;t work. I&#8217;m not sure if i used the API in a wrong way or if Chrome or Opera does something special here.
+Point is even after fiddling around for a bit it didn&#8217;t work in both browsers at the same time.</p>
+
+<p>I think it should look somethink like this, but sometimes the popstate event is not the one you would want and you have to use the originalEvent and sometimes not.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">(</span><span class="nb">window</span><span class="p">).</span><span class="nx">bind</span><span class="p">(</span><span class="s2">&quot;popstate&quot;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">originalEvent</span><span class="p">().</span><span class="nx">state</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">history</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So whats the solution for that kind of problem? Just ask the internet if anybody has written a nice wrapper for this
+which takes care about the different browsers. And suprise, suprise I found <a href="https://github.com/balupton/History.js/">history.js</a></p>
+
+<p>Because I already knew how and when to add new states and how to act on a &#8216;back&#8217; event, the change to history.js was
+pretty easy. Just had to change some keywords. And it almost immedialety work in all browsers I tested it (opera, chrome, firefox)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">Adapter</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nb">window</span><span class="p">,</span><span class="s1">&#39;statechange&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">state</span> <span class="o">=</span> <span class="nx">History</span><span class="p">.</span><span class="nx">getState</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// do stuff</span>
+</span><span class='line'><span class="p">});</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// make a new state</span>
+</span><span class='line'><span class="nx">History</span><span class="p">.</span><span class="nx">pushState</span><span class="p">(</span><span class="nx">data</span><span class="p">,</span> <span class="nx">title</span><span class="p">,</span> <span class="nx">url</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Besides not having to care about browser differences the libary also supports a fallback mode for non HTML5 browsers,
+which is nice if you care about such stuff.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS Playground 1: Mustache and ICanHaz.js</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T16:53:00+01:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Over the last few days I started to play around with javascript and other front-end related stuff.</p>
+
+<p>The first thing I wanted to try and use was <a href="http://mustache.github.com/">mustache</a>.
+So first I needed a backendt to serve the templates and the dynamic data. Of course I used Ruby
+and Sinatra for this. For the views the server had to render I also used Mustache - that&#8217;s the nice
+thing about Mustache you can use it everywhere.</p>
+
+<p>Mustache as it is is really nice, after you understood how it will use partials and how it goes through
+the data you get in my optinion much nicher source template als in someting like erb. Also you don&#8217;t
+depend on some magic like when using haml or slim. And of course the split between data and template
+really helps to structure your code.</p>
+
+<p>So now to the interesting part the client side. After a few very simple tests on how to use mustache.js
+I accounted the problem on how to get the templates to the client without having to write them directly
+into the javascript file.
+I looked around and discoverd <a href="http://icanhazjs.com/">ICanHaz.js</a>, which is a nice wrapper around
+mustache and tries to solve the template issue.
+There are two ways to register a template for ICanHaz, the first one is to write them into the html like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;script </span><span class="na">id=</span><span class="s">&quot;group&quot;</span> <span class="na">type=</span><span class="s">&quot;text/html&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>  <span class="c1">//the template</span>
+</span><span class='line'><span class="nt">&lt;/script&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But to use this you have to write all your templates into the html source, which I didn&#8217;t liked.</p>
+
+<p>The other way is to get the templates via JS as JSON from the server and just add them to ICanHaz:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='javascript'><span class='line'><span class="nx">$</span><span class="p">.</span><span class="nx">getJSON</span><span class="p">(</span><span class="s1">&#39;/myserver/templates.json&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">templates</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">$</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">templates</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">template</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">ich</span><span class="p">.</span><span class="nx">addTemplate</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nx">name</span><span class="p">,</span> <span class="nx">template</span><span class="p">.</span><span class="nx">template</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">});</span>
+</span><span class='line'><span class="p">});</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thats really clean and your have your templates seperate from the rest of the javascript and html.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/20/haskell/">Haskell</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-20T14:44:00+01:00" pubdate data-updated="true">Jan 20<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Cause I keep looking around for another interesting language to learn I found this nice Haskell quickstart tutorial and some other nice stuff to getting started.
+Will see if I eventually come around lerning Haskell at least it sounds interesting.</p>
+
+<ul>
+<li><a href="http://yannesposito.com/Scratch/en/blog/Yesod-tutorial-for-newbies/">A simple yesod tutorial. Yesod is an Haskell web framework. You shouldn’t need to know Haskell.</a></li>
+<li><a href="http://blog.ezyang.com/2011/11/how-to-read-haskell/">How to read Haskell like Python</a></li>
+<li><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good!</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s Throw Works and Whats Awesome About Sinatra&#8217;s Halt</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-19T18:39:00+01:00" pubdate data-updated="true">Jan 19<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just discovered two great blog posts. ( via <a href="http://rubyweekly.com/">Ruby Weekly</a>)</p>
+
+<ul>
+<li><a href="http://rubylearning.com/blog/2011/07/12/throw-catch-raise-rescue-im-so-confused/">Throw, Catch, Raise, Rescue… I’m so confused!</a> by Avid Grimm</li>
+<li><a href="http://myronmars.to/n/dev-blog/2012/01/why-sinatras-halt-is-awesome">Why Sinatra&#8217;s Halt is Awesome</a> by Myron Marston</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/02/octopress-for-the-win/">Octopress for the Win</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-02T05:02:00+01:00" pubdate data-updated="true">Jan 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>New Year, new Blog.</p>
+
+<p>I decided to kill my tumblr and start this octopress blog. At the moment I
+just imported most of the old posts and fixed tags/categories, but I still
+have to check all links and move some images.</p>
+
+<p>And just for the record here are a few of the snippets used to convert the
+posts.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># download and extract posts in jekyll format</span>
+</span><span class='line'>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
+</span><span class='line'>ruby -r <span class="s1">&#39;./tumblr&#39;</span> -e <span class="s1">&#39;Jekyll::Tumblr.process(&quot;http://sch1zo.tumblr.com&quot;,format=&quot;md&quot;)&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exchange tags for categories</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==4 and s/tags/categories/;close ARGV if eof&#39;</span> *
+</span><span class='line'>
+</span><span class='line'><span class="c"># add a tumbler tag/category to each post</span>
+</span><span class='line'>perl -pi -e <span class="s1">&#39;$.==5 and s/^/- tumblr\n/;close ARGV if eof&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
+after searching for this kind a task, and I didn&#8217;t want to convert them to Ruby
+or anything else.</p>
+
+<p>Unfortunatly I couldn&#8217;t find a way to write the date into the meta data of the
+file. Perhaps I&#8217;m just to tired&#8230;</p>
+
+<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
+by hand.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ruby -pie <span class="s1">&#39;$.==4 and $_.sub!(/^/, &quot;date: #{&quot;2011-03-02-here should be the current filename&quot;.match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n&quot;)&#39;</span> *
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Compiling Ruby 1.8.7 With Gcc 4.6.*</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-09T00:00:00+02:00" pubdate data-updated="true">Sep 9<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>the last few days I reinstalled archlinux and encountered a problem. <strong>You
+can&#8217;t compile ruby 1.8.7 or REE 1.8.7 with gcc4.6</strong>. Earlier versions probably
+have the same issue, but at least 1.9.2 or newer works.</p>
+
+<p>But I wanted ree installed because its load requirements faster than the newer
+build which is important when developing rails.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/09/09/compiling-ruby-187-with-gcc-46/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">How to Compile a Fast Imagemagick</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-09-06T00:00:00+02:00" pubdate data-updated="true">Sep 6<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
+some image processing on a new webapp I&#8217;m building - creating thumbnails of
+uploaded images to be precise.</p>
+
+<p>The initial choice was to simply use the the package from the repository. But
+it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
+wallpaper which I used to test it( time sad a little above 7 seconds).</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/09/06/how-to-compile-a-fast-imagemagick/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">HOWTO: Establishing a SSH Tunnel and Use It as SOCKS Proxy</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-16T00:00:00+02:00" pubdate data-updated="true">Aug 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I have one last post regarding my plan to reroute certain web traffic through
+my server.</p>
+
+<p>This post maybe should have been the first in this little series, because I
+will show you how to setup a SOCKS proxy to your server.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/16/howto-establishing-a-ssh-tunnel-and-use-it-as-socks-proxy/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">HOWTO: Use a Proxy on a Per-site Basis</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T00:00:00+02:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>in my last post I described how to setup a SOCKS proxy which only gets used on
+some specific sites.</p>
+
+<p>For example you only want to use the proxy if you got to &#8220;hulu.com&#8221; and
+&#8220;pandora.com&#8221;.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/15/howto-use-a-proxy-on-a-per-site-basis/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: dynamically define methods in ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/">JS playground 2: AJAX and the Browserhistory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS playground 1: mustache and ICanHaz.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/haskell/">Haskell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s throw works and whats awesome about Sinatra&#8217;s halt</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Flattr</h1>
+  <a class="FlattrButton" style="display:none;" title="meh..." href="http://sch1zo.github.com" data-flattr-tags="text, hacking, ruby, opensource">Flattr me</a>
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

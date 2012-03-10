@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: redis | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/redis/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to setup rails on redis]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis/"/>
+    <updated>2011-07-05T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis</id>
+    <content type="html"><![CDATA[<p>just some steps to setup rails 3.1 with redis as database, rspec for testing
+and watchr/spork to automate testing.</p>
+
+<!-- more -->
+
+
+<h1>scripts to run</h1>
+
+<p><code>sh
+rails new app_name -OT
+rake rspec:install
+spork --bootstrap
+</code></p>
+
+<h1>add some gems to Gemfile</h1>
+
+<p>``` ruby Gemfile</p>
+
+<h1>Database</h1>
+
+<p>gem redis
+gem redis_storage, >= 0.2.9</p>
+
+<p>gem therubyracer    # to get coffee script running</p>
+
+<h1>testing</h1>
+
+<p>group :test, :development do
+  gem rspec-rails
+  gem mocha
+  gem watchr
+  gem spork, ~> 0.9.0.rc
+end
+```</p>
+
+<h1>add or edit those files</h1>
+
+<p><code>ruby .rspec
+--colour
+--format d
+--drb
+</code></p>
+
+<p>``` ruby .watchr
+def run_spec(file)
+  unless File.exist?(file)</p>
+
+<pre><code>puts "#{file} does not exist"
+return
+</code></pre>
+
+<p>  end</p>
+
+<p>  puts "Running #{file}"
+  system "bundle exec rspec #{file}"
+  puts
+end</p>
+
+<p>watch("spec/.<em>/</em>_spec.rb") do |match|
+  run_spec match[0]
+end</p>
+
+<p>watch("app/(.<em>/.</em>).rb") do |match|
+  run_spec %{spec/#{match[1]}_spec.rb}
+end
+```</p>
+
+<p><code>ruby lib/tasks/watchr.rake
+desc "Run watchr"
+task :watchr do
+  sh %{bundle exec watchr .watchr}
+end
+</code></p>
+
+<p><code>ruby config/application.rb
+config.generators do |g|
+  g.orm             :redis
+  g.template_engine :haml
+  g.test_framework  :rspec
+  g.stylesheet_engine = :sass
+end
+</code></p>
+
+<p>``` ruby spec/spec_helper.rb
+require spork</p>
+
+<p>Spork.prefork do
+  # Loading more in this block will cause your tests to run faster. However,
+  # if you change any configuration or code from libraries loaded here, youll
+  # need to restart spork for it take effect.</p>
+
+<p>  # This file is copied to spec/ when you run rails generate rspec:install
+  ENV["RAILS_ENV"] ||= test
+  require File.expand_path("../../config/environment", <strong>FILE</strong>)
+  require rspec/rails</p>
+
+<p>  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join("spec/support/<em>*/</em>.rb")].each {|f| require f}</p>
+
+<p>  RSpec.configure do |config|</p>
+
+<pre><code>config.mock_with :mocha
+config.before :each do
+  $db.flushdb
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>Spork.each_run do
+  # This code will be run each time you run your specs
+end
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[my first gem 'redis_storage']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage/"/>
+    <updated>2011-06-25T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/25/my-first-gem-redis_storage</id>
+    <content type="html"><![CDATA[<p>just release my first gem on rubygems
+<a href="https://rubygems.org/gems/redis_storage">redis_storage</a> I wanted to call it
+redis_record but their already is a gem with that name.</p>
+
+<p>Its a redis interface for storing models in redis - or to be more exact
+storing there attributes as json.</p>
+
+<!-- more -->
+
+
+<p>Basically I just got sick rewriting the same logic over and over again for
+each model of my little sinatra apps so this evolved. Then I wanted to write a
+new rails app an thought having this in a gem would be really nice, and a
+generator would be awesome.</p>
+
+<p>If you interested check it out on
+<a href="http://github.com/sch1zo/redis_storage">github</a></p>
+]]></content>
+  </entry>
+  
+</feed>

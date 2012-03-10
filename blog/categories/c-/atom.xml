@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: c++ | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/c-/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[how to compile a fast imagemagick]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick/"/>
+    <updated>2011-09-06T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/09/06/how-to-compile-a-fast-imagemagick</id>
+    <content type="html"><![CDATA[<p>yesterday I had to install <a href="http://www.imagemagick.com">ImageMagick</a> to do
+some image processing on a new webapp I'm building - creating thumbnails of
+uploaded images to be precise.</p>
+
+<p>The initial choice was to simply use the the package from the repository. But
+it was unbarable slow to simply create a 100x100 thumbnail of a 1080p
+wallpaper which I used to test it( time sad a little above 7 seconds).</p>
+
+<!-- more -->
+
+
+<p>So the logical next step was to get the source and compile ImageMagick by
+hand. But I didn't stopped there. After a quick search I found some tips to
+get it even faster:</p>
+
+<ul>
+<li>first lets mess around with the compiler optimization I found <a href="http://wikis.sun.com/display/AppPerfTuning/ImageMagick">here</a> but I did not change the CC CXX or CFLAGS instead I only modified CXXFLAGS</li>
+</ul>
+
+
+<p>export CXXFLAGS = "-g0 -fast -zlazyload"</p>
+
+<ul>
+<li>make it use only about half the memory configure with with-quantum-depth=8 instead of the default 16</li>
+</ul>
+
+
+<p>./configure --with-quantum-depth=8</p>
+
+<p>If this gives you a snappy imagemagick your fine, but on my ubuntu server a
+simple resize still took 7 seconds.</p>
+
+<p>So I did a little bit more searching and found out that a buggy OpenMP can
+cause this issue and disabling it while compiling fixes the slowness.</p>
+
+<p><strong>Finally here my complete configure line</strong></p>
+
+<p><code>sh
+./configure CXX="g++" CXXFLAGS="-g0 -fast -zlazyload" --with-quantum-depth=8 --disable-openmp
+</code></p>
+
+<hr />
+
+<p>I know this post is a mess, but I dont care</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[damn is ruby slow - at least compared to c++]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c/"/>
+    <updated>2011-04-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/16/damn-is-ruby-slow---at-least-compared-to-c</id>
+    <content type="html"><![CDATA[<p>ok thats nothing new, yet the difference was a little bit surprising.</p>
+
+<p>In an earlier post I described the <em>puzzleSolver</em> project and before starting
+to implement parts of it in c++ I build a Ruby prototype. The prototype
+generated 1000 random puzzle pieces and later generated a quality between
+every 4000 puzzle edges, thats about 8.000.000 calculations. The Ruby
+Prototype needs <strong>3 minutes</strong> to finish that calculation.</p>
+
+<!-- more -->
+
+
+<p>The c++ version does exactly the same, it has the same structure and
+algorithm. Now the calculations are done in <strong>under 1 second</strong> for 1000
+pieces.</p>
+
+<p>As I sad, its not surprising that the c++ version is way faster than the Ruby
+prototype. But a difference of <strong>200 times faster</strong> was surprising.</p>
+
+<p>But I don't want to make Ruby bad, I love Ruby, without the prototype it would
+have been way more difficult to build the c++ version. And of cause the time
+building the two versions where different, the Ruby prototype was working
+within a few hours, plus another few to optimize the algorithm. The c++
+version toke a few days till it was working like the prototype, but that might
+also had to do that my last c++ encounter was like two years ago. But even so
+I just had to re implement the existing algorithm. Without that it would have
+taken even longer.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[damn is it long ago since the last time I used c++]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c/"/>
+    <updated>2011-04-06T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/04/06/damn-is-it-long-ago-since-the-last-time-i-used-c</id>
+    <content type="html"><![CDATA[<p>for one thing I just want to test if email publishing works as expected, for
+another thing I just realized how long it is ago since the last time I really
+used c++.</p>
+
+<!-- more -->
+
+
+<p>I have to use it for a project in one of my courses and I both <em>hate</em> to use
+it and <em>like</em> to get into it again. It's just so different compared to
+something like Java or even Ruby.</p>
+
+<p>In the lecture we formed a project team and develop a automatic jigsaw puzzle
+solver. Besides a team who analyses the puzzle pieces and one which presents
+and animates the puzzle and the puzzle solving I'm in the team which tries to
+solve the puzzle with the provided data from team one. I'm really curious if
+we can manage to solve something like a 1000 piece puzzle.</p>
+]]></content>
+  </entry>
+  
+</feed>

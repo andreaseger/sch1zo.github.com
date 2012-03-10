@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Standalone autotest - meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="after setting up rspec here is some code to get autotest working with rspec. In addition it shows nice notifications on every test run, so you don&# &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  (function() {
+   var s = document.createElement('script');
+   var t = document.getElementsByTagName('script')[0];
+
+   s.type = 'text/javascript';
+   s.async = true;
+   s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto&uid=sch1zo&category=text';
+
+   t.parentNode.insertBefore(s, t);
+   })();
+  /* ]]> */
+  </script>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Standalone Autotest</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-16T00:00:00+02:00" pubdate data-updated="true">May 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>after setting up rspec here is some code to get autotest working with rspec.</p>
+
+<p>In addition it shows nice notifications on every test run, so you don&#8217;t even
+have to lock in the console window.</p>
+
+<p>You only have to save the following gist as <strong>.autotest</strong></p>
+
+<p>[edit:] removed the Autotest.add_discovery part from the gist as mentioned in
+the comments. Just add a <strong>.rspec</strong> file in the same directory to get autotest
+speak RSpec</p>
+
+<p><a href="http://www.stupididea.com/2009/03/15/non-rails-autotest-rspec-%0Alibnotify-linux/">Source</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andreas Eger</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-16T00:00:00+02:00" pubdate data-updated="true">May 16<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/autotest/'>autotest</a>, <a class='category' href='/blog/categories/rspec/'>rspec</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/standalone/'>standalone</a>, <a class='category' href='/blog/categories/tumblr/'>tumblr</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/" data-via="sch1zo" data-counturl="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/" >Tweet</a>
+  
+  
+  <a class="FlattrButton" style="display:none;" title="Standalone autotest" href="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/" data-flattr-button="compact" data-flattr-tags="autotest,rspec,ruby,standalone,tumblr,">Flattr</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/05/15/rspec-2-standalone-rake-task/" title="Previous Post: RSpec 2 standalone rake task">&laquo; RSpec 2 standalone rake task</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/06/14/how-not-to-write-code/" title="next Post: How not to write code...">How not to write code... &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: dynamically define methods in ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/">JS playground 2: AJAX and the Browserhistory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS playground 1: mustache and ICanHaz.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/haskell/">Haskell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby's throw works and whats awesome about Sinatra's halt</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Flattr</h1>
+  <a class="FlattrButton" style="display:none;" title="meh..." href="http://sch1zo.github.com" data-flattr-tags="text, hacking, ruby, opensource">Flattr me</a>
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

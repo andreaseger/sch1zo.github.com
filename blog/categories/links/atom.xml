@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: links | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/links/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[That's what she said: teaching AI the proper respond to, 'I was trying all night, but I just could not get it in!']]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in/"/>
+    <updated>2011-05-01T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/01/thats-what-she-said-teaching-ai-the-proper-respond-to-i-was-trying-all-night-but-i-just-could-not-get-it-in</id>
+    <content type="html"><![CDATA[<p><a href="http://www.newscientist.com/blogs/onepercent/2011/04/software-works-out-%0Awhether-tha.html">Thats what she said: teaching AI the proper respond to, I was trying all
+night, but I just could not get it
+in!</a></p>
+
+<p><a href="http://ohnoros.co/post/5050746093">ohnorosco</a>:</p>
+
+<blockquote><p>The best academic paper you’ll read all year. From two University of
+Washington Computer Scientists.
+(<a href="http://www.cs.washington.edu/homes/brun/pubs/pubs/Kiddon11.pdf">PDF</a>)</p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>

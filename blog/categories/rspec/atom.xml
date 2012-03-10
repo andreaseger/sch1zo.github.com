@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: rspec | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/rspec/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to setup rails on redis]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis/"/>
+    <updated>2011-07-05T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/07/05/how-to-setup-rails-on-redis</id>
+    <content type="html"><![CDATA[<p>just some steps to setup rails 3.1 with redis as database, rspec for testing
+and watchr/spork to automate testing.</p>
+
+<!-- more -->
+
+
+<h1>scripts to run</h1>
+
+<p><code>sh
+rails new app_name -OT
+rake rspec:install
+spork --bootstrap
+</code></p>
+
+<h1>add some gems to Gemfile</h1>
+
+<p>``` ruby Gemfile</p>
+
+<h1>Database</h1>
+
+<p>gem redis
+gem redis_storage, >= 0.2.9</p>
+
+<p>gem therubyracer    # to get coffee script running</p>
+
+<h1>testing</h1>
+
+<p>group :test, :development do
+  gem rspec-rails
+  gem mocha
+  gem watchr
+  gem spork, ~> 0.9.0.rc
+end
+```</p>
+
+<h1>add or edit those files</h1>
+
+<p><code>ruby .rspec
+--colour
+--format d
+--drb
+</code></p>
+
+<p>``` ruby .watchr
+def run_spec(file)
+  unless File.exist?(file)</p>
+
+<pre><code>puts "#{file} does not exist"
+return
+</code></pre>
+
+<p>  end</p>
+
+<p>  puts "Running #{file}"
+  system "bundle exec rspec #{file}"
+  puts
+end</p>
+
+<p>watch("spec/.<em>/</em>_spec.rb") do |match|
+  run_spec match[0]
+end</p>
+
+<p>watch("app/(.<em>/.</em>).rb") do |match|
+  run_spec %{spec/#{match[1]}_spec.rb}
+end
+```</p>
+
+<p><code>ruby lib/tasks/watchr.rake
+desc "Run watchr"
+task :watchr do
+  sh %{bundle exec watchr .watchr}
+end
+</code></p>
+
+<p><code>ruby config/application.rb
+config.generators do |g|
+  g.orm             :redis
+  g.template_engine :haml
+  g.test_framework  :rspec
+  g.stylesheet_engine = :sass
+end
+</code></p>
+
+<p>``` ruby spec/spec_helper.rb
+require spork</p>
+
+<p>Spork.prefork do
+  # Loading more in this block will cause your tests to run faster. However,
+  # if you change any configuration or code from libraries loaded here, youll
+  # need to restart spork for it take effect.</p>
+
+<p>  # This file is copied to spec/ when you run rails generate rspec:install
+  ENV["RAILS_ENV"] ||= test
+  require File.expand_path("../../config/environment", <strong>FILE</strong>)
+  require rspec/rails</p>
+
+<p>  # Requires supporting ruby files with custom matchers and macros, etc,
+  # in spec/support/ and its subdirectories.
+  Dir[Rails.root.join("spec/support/<em>*/</em>.rb")].each {|f| require f}</p>
+
+<p>  RSpec.configure do |config|</p>
+
+<pre><code>config.mock_with :mocha
+config.before :each do
+  $db.flushdb
+end
+</code></pre>
+
+<p>  end
+end</p>
+
+<p>Spork.each_run do
+  # This code will be run each time you run your specs
+end
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ActiveModel Lint Test for RSpec]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec/"/>
+    <updated>2011-06-23T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/23/activemodel-lint-test-for-rspec</id>
+    <content type="html"><![CDATA[<p><a href="http://library.edgecase.com/Rails/2010/10/30%0A/activemodel-lint-test-for-rspec.html">ActiveModel Lint Test for RSpec</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Standalone autotest]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/16/standalone-autotest/"/>
+    <updated>2011-05-16T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/16/standalone-autotest</id>
+    <content type="html"><![CDATA[<p>after setting up rspec here is some code to get autotest working with rspec.</p>
+
+<p>In addition it shows nice notifications on every test run, so you don't even
+have to lock in the console window.</p>
+
+<p>You only have to save the following gist as <strong>.autotest</strong></p>
+
+<p>[edit:] removed the Autotest.add_discovery part from the gist as mentioned in
+the comments. Just add a <strong>.rspec</strong> file in the same directory to get autotest
+speak RSpec</p>
+
+<p><a href="http://www.stupididea.com/2009/03/15/non-rails-autotest-rspec-%0Alibnotify-linux/">Source</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[RSpec 2 standalone rake task]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task/"/>
+    <updated>2011-05-15T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/05/15/rspec-2-standalone-rake-task</id>
+    <content type="html"><![CDATA[<p>just to save me some time the next time I need this.</p>
+
+<p>this task will simply run all <strong>_spec.rb</strong> files within your <strong>spec</strong> folder</p>
+
+<p><a href="http://duckpunching.com/rspec-2-0-rake-tasks">Source</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: perl | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/perl/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Octopress for the win]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/02/octopress-for-the-win/"/>
+    <updated>2012-01-02T05:02:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/02/octopress-for-the-win</id>
+    <content type="html"><![CDATA[<p>New Year, new Blog.</p>
+
+<p>I decided to kill my tumblr and start this octopress blog. At the moment I
+just imported most of the old posts and fixed tags/categories, but I still
+have to check all links and move some images.</p>
+
+<p>And just for the record here are a few of the snippets used to convert the
+posts.</p>
+
+<p>``` sh</p>
+
+<h1>download and extract posts in jekyll format</h1>
+
+<p>wget https://github.com/stephenmcd/jekyll/blob/master/lib/jekyll/migrators/tumblr.rb
+ruby -r './tumblr' -e 'Jekyll::Tumblr.process("http://sch1zo.tumblr.com",format="md")'</p>
+
+<h1>exchange tags for categories</h1>
+
+<p>perl -pi -e '$.==4 and s/tags/categories/;close ARGV if eof' *</p>
+
+<h1>add a tumbler tag/category to each post</h1>
+
+<p>perl -pi -e '$.==5 and s/<sup>/-</sup> tumblr\n/;close ARGV if eof' *
+```</p>
+
+<p>yeah I know, Perl WTF!? These snippets just were the first thing google/stackoverflow gave me
+after searching for this kind a task, and I didn't want to convert them to Ruby
+or anything else.</p>
+
+<p>Unfortunatly I couldn't find a way to write the date into the meta data of the
+file. Perhaps I'm just to tired...</p>
+
+<p>Here is what I got(this time in ruby). After failing here I just went ahead ant edited the 19 files
+by hand.</p>
+
+<p><code>sh
+ruby -pie '$.==4 and $_.sub!(/^/, "date: #{"2011-03-02-here should be the current filename".match(/(\d{4}-\d{2}-\d{2}).*/)[1]}\n")' *
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

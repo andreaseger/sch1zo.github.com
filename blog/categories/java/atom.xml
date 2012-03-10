@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: java | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/java/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How not to write code...]]></title>
+    <link href="http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code/"/>
+    <updated>2011-06-14T00:00:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code</id>
+    <content type="html"><![CDATA[<p>over the last weeks I had to create a GUI in Java with three other fellow
+students. It was part of one of our courses which is about Graphical User
+Interfaces and after creating wireframes and a design concept we only had
+three weeks time to implement all of it, including parsers for <em>nine</em> files -
+a few of them were xml but not the nice kind of xml - and a configuration
+file.</p>
+
+<!-- more -->
+
+
+<p>We didn't had time to make any kind of project plan or even a software design.
+We had to code fast to get all aspects working in time. Everybody simply got a
+few pieces to implement and at the end we somehow hacked it together. We
+managed to get most of it and it worked as desired but the codebase itself is
+a mess.</p>
+
+<p>On the one hand its simple because Java and Swing IMHO always produces messy
+code but of cause the main reason was probably just because we just hacked
+things together to get them working.</p>
+
+<p>At least we made sure that nobody will ever want to use our code for there
+projects.</p>
+]]></content>
+  </entry>
+  
+</feed>

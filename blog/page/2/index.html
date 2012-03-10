@@ -1,0 +1,665 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>meh...</title>
+  <meta name="author" content="Andreas Eger">
+
+  
+  <meta name="description" content="as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers To use the tunnel you &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://sch1zo.github.com/blog/page/2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="/atom.xml" rel="alternate" title="meh..." type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=VT323' rel='stylesheet' type='text/css'>
+
+  <script type="text/javascript">
+  /* <![CDATA[ */
+  (function() {
+   var s = document.createElement('script');
+   var t = document.getElementsByTagName('script')[0];
+
+   s.type = 'text/javascript';
+   s.async = true;
+   s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto&uid=sch1zo&category=text';
+
+   t.parentNode.insertBefore(s, t);
+   })();
+  /* ]]> */
+  </script>
+
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">meh...</a></h1>
+  
+    <h2>coding - hacking - rambling - brainvomiting</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:sch1zo.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">HOWTO: Configuring a Local SOCKS Proxy in Your Browser</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-14T00:00:00+02:00" pubdate data-updated="true">Aug 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>as a follow up on my last post I thought I describe how to setup a local proxy
+for a ssh tunnel in the most common browsers</p>
+
+<p>To use the tunnel you will have to configure the browsers to use a SOCKS
+proxy. For this post I will have my local proxy at 127.0.0.1:1234 (or
+localhost:1234)</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/14/howto-configuring-a-local-socks-proxy-in-your-browser/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Using My Ec2 Instance to Get a US IP</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-12T00:00:00+02:00" pubdate data-updated="true">Aug 12<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today I was surfing around and once again I got that ugly GEMA message on a
+youtube music video which prevented me from watching it. In the last months
+more and more videos got blocked this way and makes having a german IP a pain.</p>
+
+<p>But than I remembered that I can set up a Micro Instance in one of the US
+datacentrers and route my web traffic through it.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/08/12/using-my-ec2-instance-to-get-a-us-ip/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Messing Around With the Amazon Cloud Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-15T00:00:00+02:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>after getting the EC2 Instance up and running its time to install a basic
+development environment.</p>
+
+<ul>
+<li>zsh and screen makes as expected no problems.</li>
+<li>vim is unfortunately not compiled with ruby and I couldn&#8217;t find another one in the repository so it has to work without it</li>
+<li>rvm again no problem. As I&#8217;m writing this post ruby 1.9.2 is compiling, which given the power of a micro instance is slow perhaps to slow to do anything with it, but time will see.</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0/">Messing Around With the Amazon Cloud Part 0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-15T00:00:00+02:00" pubdate data-updated="true">Jul 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>so out of curiosity I just registered for <a href="http://aws.amazon.com/">Amazon Web
+Services</a> and my plan is to just use the free tier
+Amazon provides <a href="http://aws.amazon.com/free">link</a>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/15/messing-around-with-the-amazon-cloud-part-0/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/07/05/how-to-setup-rails-on-redis/">How to Setup Rails on Redis</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-05T00:00:00+02:00" pubdate data-updated="true">Jul 5<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>just some steps to setup rails 3.1 with redis as database, rspec for testing
+and watchr/spork to automate testing.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/07/05/how-to-setup-rails-on-redis/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/25/my-first-gem-redis_storage/">My First Gem &#8216;Redis_storage&#8217;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-25T00:00:00+02:00" pubdate data-updated="true">Jun 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>just release my first gem on rubygems
+<a href="https://rubygems.org/gems/redis_storage">redis_storage</a> I wanted to call it
+redis_record but their already is a gem with that name.</p>
+
+<p>Its a redis interface for storing models in redis - or to be more exact
+storing there attributes as json.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/25/my-first-gem-redis_storage/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/23/activemodel-lint-test-for-rspec/">ActiveModel Lint Test for RSpec</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-23T00:00:00+02:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://library.edgecase.com/Rails/2010/10/30%0A/activemodel-lint-test-for-rspec.html">ActiveModel Lint Test for RSpec</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/20/finally-jumped-to-vim/">Finally Jumped to Vim&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-20T00:00:00+02:00" pubdate data-updated="true">Jun 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>…and I love it.</p>
+
+<p>I have to admit that it took me really long before I took the step to use vim.
+Before I used the typical graphical editors(like gedit/sublime_text) to write
+my code. Full fledged IDE where not really preferred way of coding, but till
+now I ad least needed my mouse to do some fancy editing stuff. I knew how the
+basic controlls in vi are but felt awkward to use them, so most of the time
+when I needed a terminal editor I used nano.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/20/finally-jumped-to-vim/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/06/14/how-not-to-write-code/">How Not to Write Code&#8230;</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-14T00:00:00+02:00" pubdate data-updated="true">Jun 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>over the last weeks I had to create a GUI in Java with three other fellow
+students. It was part of one of our courses which is about Graphical User
+Interfaces and after creating wireframes and a design concept we only had
+three weeks time to implement all of it, including parsers for <em>nine</em> files -
+a few of them were xml but not the nice kind of xml - and a configuration
+file.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2011/06/14/how-not-to-write-code/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/05/16/standalone-autotest/">Standalone Autotest</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-05-16T00:00:00+02:00" pubdate data-updated="true">May 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>after setting up rspec here is some code to get autotest working with rspec.</p>
+
+<p>In addition it shows nice notifications on every test run, so you don&#8217;t even
+have to lock in the console window.</p>
+
+<p>You only have to save the following gist as <strong>.autotest</strong></p>
+
+<p>[edit:] removed the Autotest.add_discovery part from the gist as mentioned in
+the comments. Just add a <strong>.rspec</strong> file in the same directory to get autotest
+speak RSpec</p>
+
+<p><a href="http://www.stupididea.com/2009/03/15/non-rails-autotest-rspec-%0Alibnotify-linux/">Source</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2012/02/08/fyi-dynamically-define-methods-in-ruby/">FYI: dynamically define methods in ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/30/js-playground-2-ajax-and-the-browserhistory/">JS playground 2: AJAX and the Browserhistory</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/">JS playground 1: mustache and ICanHaz.js</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/20/haskell/">Haskell</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2012/01/19/how-rubys-throw-works-and-whats-awesome-about-sinatras-halt/">How Ruby&#8217;s throw works and whats awesome about Sinatra&#8217;s halt</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>Flattr</h1>
+  <a class="FlattrButton" style="display:none;" title="meh..." href="http://sch1zo.github.com" data-flattr-tags="text, hacking, ruby, opensource">Flattr me</a>
+</section>
+
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/sch1zo">@sch1zo</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'sch1zo',
+            count: 3,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("sch1zo", 2, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/sch1zo" class="twitter-follow-button" data-show-count="false">Follow @sch1zo</a>
+  
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2012 - Andreas Eger -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

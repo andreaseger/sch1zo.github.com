@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: mustache | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/mustache/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-02-08T12:31:52+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[JS playground 1: mustache and ICanHaz.js]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js/"/>
+    <updated>2012-01-29T16:53:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/01/29/js-playground-1-mustache-and-icanhaz-dot-js</id>
+    <content type="html"><![CDATA[<p>Over the last few days I started to play around with javascript and other front-end related stuff.</p>
+
+<p>The first thing I wanted to try and use was <a href="http://mustache.github.com/">mustache</a>.
+So first I needed a backendt to serve the templates and the dynamic data. Of course I used Ruby
+and Sinatra for this. For the views the server had to render I also used Mustache - that's the nice
+thing about Mustache you can use it everywhere.</p>
+
+<p>Mustache as it is is really nice, after you understood how it will use partials and how it goes through
+the data you get in my optinion much nicher source template als in someting like erb. Also you don't
+depend on some magic like when using haml or slim. And of course the split between data and template
+really helps to structure your code.</p>
+
+<p>So now to the interesting part the client side. After a few very simple tests on how to use mustache.js
+I accounted the problem on how to get the templates to the client without having to write them directly
+into the javascript file.
+I looked around and discoverd <a href="http://icanhazjs.com/">ICanHaz.js</a>, which is a nice wrapper around
+mustache and tries to solve the template issue.
+There are two ways to register a template for ICanHaz, the first one is to write them into the html like this:</p>
+
+<p>``` html</p>
+
+<script id="group" type="text/html">
+  //the template
+</script>
+
+
+<p>```</p>
+
+<p>But to use this you have to write all your templates into the html source, which I didn't liked.</p>
+
+<p>The other way is to get the templates via JS as JSON from the server and just add them to ICanHaz:</p>
+
+<p>``` javascript
+$.getJSON('/myserver/templates.json', function (templates) {</p>
+
+<pre><code>$.each(templates, function (template) {
+    ich.addTemplate(template.name, template.template);
+});
+</code></pre>
+
+<p>});
+```</p>
+
+<p>Thats really clean and your have your templates seperate from the rest of the javascript and html.</p>
+]]></content>
+  </entry>
+  
+</feed>
