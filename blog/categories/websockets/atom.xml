@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: websockets | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/websockets/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-03-10T16:56:24+01:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[sinatra sprockets and websockets]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/03/10/sinatra-sprockets-and-websockets/"/>
+    <updated>2012-03-10T16:14:00+01:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/03/10/sinatra-sprockets-and-websockets</id>
+    <content type="html"><![CDATA[<p>The last few days I tried to run a sinatra application which uses
+sprockets for it's assets together with EventMachnine Websockets from
+within one rackup file. To get this working I had to setup two things.</p>
+
+<!-- more -->
+
+
+<h1>Sprockets from within Sinatra</h1>
+
+<p>First run the Sprockets Environment within the sinatra application.
+Previously I just ran it seperatly and just mapped it to '/assets', now
+I have a created a Assets Module which just provides me with the
+sprockets environment.</p>
+
+<p>``` ruby assets_helper.rb
+module Assets
+  module Helpers</p>
+
+<pre><code>def asset_path(source)
+  "/assets/" + ::Assets.sprockets.find_asset(source).digest_path
+end
+</code></pre>
+
+<p>  end
+  def self.sprockets</p>
+
+<pre><code>return @sprockets if @sprockets
+compass_gem_root = Gem.loaded_specs['compass'].full_gem_path
+@sprockets = Sprockets::Environment.new { |env| env.logger =
+</code></pre>
+
+<p>Logger.new(STDOUT) }</p>
+
+<pre><code>@sprockets.append_path File.join 'assets', 'javascripts'
+@sprockets.append_path File.join 'assets', 'stylesheets'
+@sprockets.append_path File.join 'assets', 'images'
+@sprockets.append_path File.join
+</code></pre>
+
+<p>Gem.loaded_specs['compass'].full_gem_path, 'frameworks', 'compass',
+'stylesheets'</p>
+
+<pre><code>@sprockets.append_path File.join
+</code></pre>
+
+<p>Gem.loaded_specs['compass'].full_gem_path, 'frameworks', 'compass',
+'stylesheets', 'compass'</p>
+
+<pre><code>@sprockets.append_path File.join
+</code></pre>
+
+<p>Gem.loaded_specs['compass-susy-plugin'].full_gem_path, 'sass'</p>
+
+<pre><code>@sprockets
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Within the sinatra application I now just have to require the assets
+module and forward get requests to '/assets/*' to the sprockets
+environment.</p>
+
+<p>``` ruby app.rb
+require_relative 'lib/asset_helper'</p>
+
+<p>class App &lt; Sinatra::Base
+  set :root, File.dirname(<strong>FILE</strong>)
+  set :public_folder, File.join(root, 'public')</p>
+
+<p>  get '/assets/*' do</p>
+
+<pre><code>new_env = env.clone
+new_env["PATH_INFO"].gsub!('/assets','')
+::Assets.sprockets.call(new_env)
+</code></pre>
+
+<p>  end
+end
+```</p>
+
+<p>Via <code>assets_path</code> from the Assets::Helpers module I can now add the
+assets to my views.</p>
+
+<h1>Adding Websockets</h1>
+
+<p>The Second part is to add EventMachine::Websockets and start them
+correctly.
+Here is a simple chat/echo websocket example.</p>
+
+<p>``` ruby ws_app.rb
+@channel = EM::Channel.new</p>
+
+<p>EventMachine::WebSocket.start(host: '0.0.0.0', port: 8080) do |ws|
+  ws.onopen {</p>
+
+<pre><code>sid = @channel.subscribe { |msg|
+        ws.send msg.to_json
+      }
+@channel.push(sid: sid, msg: 'connected!')
+
+ws.onclose {
+  @channel.unsubscribe(sid)
+  @channel.push(sid: sid, msg: 'disconnected!')
+}
+
+ws.onmessage { |msg|
+  m = JSON.parse msg
+  @channel.push(sid: sid, msg: m['msg'])
+}
+
+ws.onerror { |error|
+  puts "Error occured: " + error.message
+}
+</code></pre>
+
+<p>  }
+end
+```</p>
+
+<p>Now lets hock up all parts together in config.ru</p>
+
+<p>``` ruby config.ru
+require './app'</p>
+
+<p>EventMachine.run do
+  require './ws_app'</p>
+
+<p>  App.run!
+end
+```</p>
+
+<p>Thats all you now just have to run the application on a other port than
+the EventMachine::Websockets listens to.</p>
+]]></content>
+  </entry>
+  
+</feed>
