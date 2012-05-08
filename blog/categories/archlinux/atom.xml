@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: archlinux | meh...]]></title>
+  <link href="http://sch1zo.github.com/blog/categories/archlinux/atom.xml" rel="self"/>
+  <link href="http://sch1zo.github.com/"/>
+  <updated>2012-05-08T11:08:04+02:00</updated>
+  <id>http://sch1zo.github.com/</id>
+  <author>
+    <name><![CDATA[Andreas Eger]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Downgrading a bad kernel on Arch with LUKS and LVM]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/05/08/downgrading-a-bad-kernel-on-arch-with-luks-and-lvm/"/>
+    <updated>2012-05-08T10:51:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/05/08/downgrading-a-bad-kernel-on-arch-with-luks-and-lvm</id>
+    <content type="html"><![CDATA[<ul>
+<li>boot into the ArchLinux Install Medium.</li>
+<li>here just the steps to get the chroot running</li>
+</ul>
+
+
+<p>``` sh</p>
+
+<h1>load dm_crypt/luks</h1>
+
+<p>modprobe dm_crypt
+modprobe dm_mod #not sure if needed</p>
+
+<h1>open the crypt container</h1>
+
+<p>cryptsetup luksOpen /dev/sd[x] crypt</p>
+
+<h1>scan for new LVM drives and activate them</h1>
+
+<p>vgscan
+vgchange -ay</p>
+
+<h1>create a basefolder and mount all the stuff in it</h1>
+
+<p>mkdir ${arch_base}
+mount -o compress=lzo /dev/mapper/cryptpool-cryptroot ${archbase}
+mount -o compress=lzo /dev/mapper/cryptpool-crypthome ${archbase}/home
+mount -o compress=lzo /dev/mapper/cryptpool-cryptvar ${archbase}/var</p>
+
+<p>mount -t proc proc ${archbase}/proc
+mount -t sysfs sys ${archbase}/sys
+mount -o bind /dev ${archbase}/dev</p>
+
+<h1>start chroot</h1>
+
+<p>chroot ${archbase} /bin/zsh</p>
+
+<h1>find your old kernel in /var/cache/pacman/pkg/linux-* and install it</h1>
+
+<p>pacman -U ${kernel-package}</p>
+
+<h1>you propably also want to downgrade the kernel-headers</h1>
+
+<h1>(linux-headers-*)</h1>
+
+<h1>finally add this to your /etc/pacman.conf</h1>
+
+<h1>IgnorePkg   = linux linux-headers</h1>
+
+<h1>exit chroot, umount all the stuff again and reboot</h1>
+
+<p>exit
+umount ${new_arch}/{home,var,proc,sys,dev}
+umount ${new_arch}
+reboot
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

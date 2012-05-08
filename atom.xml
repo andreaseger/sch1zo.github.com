@@ -4,7 +4,7 @@
   <title><![CDATA[meh...]]></title>
   <link href="http://sch1zo.github.com/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-03-10T16:56:24+01:00</updated>
+  <updated>2012-05-08T11:08:04+02:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Downgrading a bad kernel on Arch with LUKS and LVM]]></title>
+    <link href="http://sch1zo.github.com/blog/2012/05/08/downgrading-a-bad-kernel-on-arch-with-luks-and-lvm/"/>
+    <updated>2012-05-08T10:51:00+02:00</updated>
+    <id>http://sch1zo.github.com/blog/2012/05/08/downgrading-a-bad-kernel-on-arch-with-luks-and-lvm</id>
+    <content type="html"><![CDATA[<ul>
+<li>boot into the ArchLinux Install Medium.</li>
+<li>here just the steps to get the chroot running</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># load dm_crypt/luks</span>
+</span><span class='line'>modprobe dm_crypt
+</span><span class='line'>modprobe dm_mod <span class="c">#not sure if needed</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># open the crypt container</span>
+</span><span class='line'>cryptsetup luksOpen /dev/sd<span class="o">[</span>x<span class="o">]</span> crypt
+</span><span class='line'>
+</span><span class='line'><span class="c"># scan for new LVM drives and activate them</span>
+</span><span class='line'>vgscan
+</span><span class='line'>vgchange -ay
+</span><span class='line'>
+</span><span class='line'><span class="c"># create a basefolder and mount all the stuff in it</span>
+</span><span class='line'>mkdir <span class="k">${</span><span class="nv">arch_base</span><span class="k">}</span>
+</span><span class='line'>mount -o <span class="nv">compress</span><span class="o">=</span>lzo /dev/mapper/cryptpool-cryptroot <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>
+</span><span class='line'>mount -o <span class="nv">compress</span><span class="o">=</span>lzo /dev/mapper/cryptpool-crypthome <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/home
+</span><span class='line'>mount -o <span class="nv">compress</span><span class="o">=</span>lzo /dev/mapper/cryptpool-cryptvar <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/var
+</span><span class='line'>
+</span><span class='line'>mount -t proc proc <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/proc
+</span><span class='line'>mount -t sysfs sys <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/sys
+</span><span class='line'>mount -o <span class="nb">bind</span> /dev <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/dev
+</span><span class='line'>
+</span><span class='line'><span class="c"># start chroot</span>
+</span><span class='line'>chroot <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span> /bin/zsh
+</span><span class='line'>
+</span><span class='line'><span class="c"># find your old kernel in /var/cache/pacman/pkg/linux-* and install it</span>
+</span><span class='line'>pacman -U <span class="k">${</span><span class="nv">kernel</span><span class="p">-package</span><span class="k">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># you propably also want to downgrade the kernel-headers</span>
+</span><span class='line'><span class="c"># (linux-headers-*)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># finally add this to your /etc/pacman.conf</span>
+</span><span class='line'><span class="c"># IgnorePkg   = linux linux-headers</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># exit chroot, umount all the stuff again and reboot</span>
+</span><span class='line'><span class="nb">exit</span>
+</span><span class='line'>umount <span class="k">${</span><span class="nv">new_arch</span><span class="k">}</span>/<span class="o">{</span>home,var,proc,sys,dev<span class="o">}</span>
+</span><span class='line'>umount <span class="k">${</span><span class="nv">new_arch</span><span class="k">}</span>
+</span><span class='line'>reboot
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[sinatra sprockets and websockets]]></title>
@@ -1163,36 +1255,6 @@ just know the tip of the iceberg. There much more vim magic to learn. Only for
 one thing I still like a graphical editor like sublime_text and thats for
 browsing code, just looking at various source files without the need of
 changing it or even copying parts.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How not to write code...]]></title>
-    <link href="http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code/"/>
-    <updated>2011-06-14T00:00:00+02:00</updated>
-    <id>http://sch1zo.github.com/blog/2011/06/14/how-not-to-write-code</id>
-    <content type="html"><![CDATA[<p>over the last weeks I had to create a GUI in Java with three other fellow
-students. It was part of one of our courses which is about Graphical User
-Interfaces and after creating wireframes and a design concept we only had
-three weeks time to implement all of it, including parsers for <em>nine</em> files -
-a few of them were xml but not the nice kind of xml - and a configuration
-file.</p>
-
-<!-- more -->
-
-
-<p>We didn&#8217;t had time to make any kind of project plan or even a software design.
-We had to code fast to get all aspects working in time. Everybody simply got a
-few pieces to implement and at the end we somehow hacked it together. We
-managed to get most of it and it worked as desired but the codebase itself is
-a mess.</p>
-
-<p>On the one hand its simple because Java and Swing IMHO always produces messy
-code but of cause the main reason was probably just because we just hacked
-things together to get them working.</p>
-
-<p>At least we made sure that nobody will ever want to use our code for there
-projects.</p>
 ]]></content>
   </entry>
   
