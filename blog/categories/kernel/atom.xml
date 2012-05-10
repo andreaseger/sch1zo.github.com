@@ -4,7 +4,7 @@
   <title><![CDATA[Category: kernel | meh...]]></title>
   <link href="http://sch1zo.github.com/blog/categories/kernel/atom.xml" rel="self"/>
   <link href="http://sch1zo.github.com/"/>
-  <updated>2012-05-08T11:08:04+02:00</updated>
+  <updated>2012-05-10T22:11:15+02:00</updated>
   <id>http://sch1zo.github.com/</id>
   <author>
     <name><![CDATA[Andreas Eger]]></name>
@@ -20,7 +20,8 @@
     <id>http://sch1zo.github.com/blog/2012/05/08/downgrading-a-bad-kernel-on-arch-with-luks-and-lvm</id>
     <content type="html"><![CDATA[<ul>
 <li>boot into the ArchLinux Install Medium.</li>
-<li>here just the steps to get the chroot running</li>
+<li>here the steps to get the chroot running and where to probably find
+the old kernel</li>
 </ul>
 
 
@@ -40,7 +41,7 @@ modprobe dm_mod #not sure if needed</p>
 <p>vgscan
 vgchange -ay</p>
 
-<h1>create a basefolder and mount all the stuff in it</h1>
+<h1>create a basefolder and mount all the stuff in it (I assume you use btrfs with compression and seperate partitions for root,home and var - adapt to your own system)</h1>
 
 <p>mkdir ${arch_base}
 mount -o compress=lzo /dev/mapper/cryptpool-cryptroot ${archbase}

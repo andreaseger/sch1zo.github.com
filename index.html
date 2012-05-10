@@ -10,7 +10,8 @@
 
   
   <meta name="description" content="boot into the ArchLinux Install Medium.
-here just the steps to get the chroot running 1
+here the steps to get the chroot running and where to probably find
+the old kernel 1
 2
 3
 4
@@ -20,20 +21,7 @@ here just the steps to get the chroot running 1
 8
 9
 10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24 &hellip;">
+11 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +59,18 @@ here just the steps to get the chroot running 1
 
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-31620626-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -137,7 +137,8 @@ here just the steps to get the chroot running 1
 
   <div class="entry-content"><ul>
 <li>boot into the ArchLinux Install Medium.</li>
-<li>here just the steps to get the chroot running</li>
+<li>here the steps to get the chroot running and where to probably find
+the old kernel</li>
 </ul>
 
 
@@ -190,7 +191,7 @@ here just the steps to get the chroot running 1
 </span><span class='line'>vgscan
 </span><span class='line'>vgchange -ay
 </span><span class='line'>
-</span><span class='line'><span class="c"># create a basefolder and mount all the stuff in it</span>
+</span><span class='line'><span class="c"># create a basefolder and mount all the stuff in it (I assume you use btrfs with compression and seperate partitions for root,home and var - adapt to your own system)</span>
 </span><span class='line'>mkdir <span class="k">${</span><span class="nv">arch_base</span><span class="k">}</span>
 </span><span class='line'>mount -o <span class="nv">compress</span><span class="o">=</span>lzo /dev/mapper/cryptpool-cryptroot <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>
 </span><span class='line'>mount -o <span class="nv">compress</span><span class="o">=</span>lzo /dev/mapper/cryptpool-crypthome <span class="k">${</span><span class="nv">archbase</span><span class="k">}</span>/home
